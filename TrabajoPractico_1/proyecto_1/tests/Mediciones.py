@@ -3,7 +3,11 @@
 import time 
 import matplotlib.pyplot as plt
 from random import randint as r
-from TrabajoPractico_1.proyecto_1.modules.modulo1 import BubbleSort,ordenamientoRapido,radix_sort
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'modules')))
+
+from modulo1 import BubbleSort, ordenamientoRapido, radix_sort
 
 tamaños = list(range(1, 500))
 tiempos_burbuja = []
