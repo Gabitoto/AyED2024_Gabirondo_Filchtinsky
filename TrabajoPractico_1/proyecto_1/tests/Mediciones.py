@@ -2,10 +2,8 @@
 
 import time 
 import matplotlib.pyplot as plt
-from burbuja import ordenamiento_burbuja
-from quickSort import ordenamientoRapido
-from radixSort import radix_sort 
-import random
+from random import randint as r
+from TrabajoPractico_1.proyecto_1.modules.modulo1 import BubbleSort,ordenamientoRapido,radix_sort
 
 tamaños = list(range(1, 500))
 tiempos_burbuja = []
@@ -13,10 +11,10 @@ tiempos_quicksort = []
 tiempos_radix = []
 fig, ax = plt.subplots()
 for tamaño in tamaños:
-    lista = [random.randint(10000, 99999) for _ in range(tamaño)]
-    lista2 = [str(random.randint(10000, 99999)) for _ in range(tamaño)]
+    lista = [r(10000, 99999) for _ in range(tamaño)]
+    lista2 = [str(r(10000, 99999)) for _ in range(tamaño)]
     inicio = time.time()
-    ordenamiento_burbuja(lista.copy())
+    BubbleSort(lista.copy())
     tiempos_burbuja.append(time.time() - inicio)
     
     inicio = time.time()
