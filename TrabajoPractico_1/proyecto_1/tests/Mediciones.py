@@ -7,7 +7,7 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'modules')))
 
-from modulo1 import BubbleSort, ordenamientoRapido, radix_sort
+from modulo1 import BubbleSort, ordenamientoRapido, radix_sort # Tambien podemos agregar un archivo __init__.py para que python trate a la carpeta de paquete.
 
 tamaños = list(range(1, 500))
 tiempos_burbuja = []
