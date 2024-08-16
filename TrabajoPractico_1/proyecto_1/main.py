@@ -1,2 +1,1 @@
 # Aplicación principal
-
