@@ -78,11 +78,8 @@ class Listasimp:
             self.siguiente = None
         else:
             self.siguiente.quitar()
-            
-        
-            
-    
-tad = Listasimp(2)
+   
+tad = Listasimp(4)
 tad.agregar(5)
 tad.agregar(4)
 tad.agregar(4)
