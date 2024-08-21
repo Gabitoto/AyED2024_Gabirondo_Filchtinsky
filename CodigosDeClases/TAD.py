@@ -2,7 +2,7 @@
 
 # Factorial
 
-def factorial(n):
+"""def factorial(n):
     # En esta funcion aplicamos recursion para poder resolver el factorial de un numero.
     if n>1:
         n = n * factorial(n-1)
@@ -13,11 +13,11 @@ def factorial(n):
         raise ValueError("Este es un valor incorrecto")
     
 objeto = factorial(5)
-print(objeto)
+print(objeto)"""
 
 # Serie Fibonacci: Este enfoque es más intuitivo, pero tiene una complejidad de tiempo exponencial, lo que significa que se vuelve ineficiente para valores grandes de N.
 
-def fibonacci(n):
+"""def fibonacci(n):
     if n == 0:
         return 0
     elif n == 1:
@@ -27,7 +27,7 @@ def fibonacci(n):
         return n
 
 for i in range(10):
-    print(fibonacci(i), end=" ")
+    print(fibonacci(i), end=" ")"""
     
 # Memoizacion: La memoización es una técnica de optimización utilizada principalmente en programación dinámica y algoritmos recursivos para mejorar la eficiencia de las funciones que calculan resultados repetidos.
 
@@ -45,13 +45,30 @@ def Fibonacci_memo(n, memo={}):
     
 print(Fibonacci_memo(10))
 
-# Estructuras de Datos.
+# Estructuras de Datos ----> Lista Simplemente Enlazada aplicando recursion.
 
-"""class Listasimp:
-    def __init__(self,inicio,espacio):
-        self.inicio = None
-        self.espacio = None
+class Listasimp:
+    def __init__(self,valor):
+        self.valor = valor
+        self.siguiente = None
     
-    def agregar(self,n):
-        pass"""
-        
+    def agregar(self, valor):
+        if self.siguiente:
+            self.siguiente.agregar(valor)
+        else: 
+            self.siguiente = Listasimp(valor)
+            
+    def mostrar(self):
+        if self.siguiente:
+            next = self.siguiente.mostrar()
+        else:
+            return self.valor
+        return f"{self.valor} {next}"    
+    
+tad = Listasimp(2)
+tad.agregar(5)
+tad.agregar(4)
+tad.agregar(4)
+listar = tad.mostrar()
+
+print(listar)        
