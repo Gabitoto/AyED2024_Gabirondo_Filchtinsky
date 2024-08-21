@@ -63,12 +63,29 @@ class Listasimp:
             next = self.siguiente.mostrar()
         else:
             return self.valor
-        return f"{self.valor} {next}"    
+        return f"{self.valor} {next}"  
+    
+    def size(self):
+        if self.siguiente is None:
+            return 1
+        else:
+            return 1 + self.siguiente.size()
+    
+    def quitar(self):
+        if self.siguiente is None:
+            raise ValueError("Nada que eliminar")
+        elif self.siguiente.siguiente is None:
+            self.siguiente = None
+        else:
+            self.siguiente.quitar()
+            
+        
+            
     
 tad = Listasimp(2)
 tad.agregar(5)
 tad.agregar(4)
 tad.agregar(4)
-listar = tad.mostrar()
-
-print(listar)        
+print(tad.mostrar())
+tad.quitar()
+print(tad.mostrar())
