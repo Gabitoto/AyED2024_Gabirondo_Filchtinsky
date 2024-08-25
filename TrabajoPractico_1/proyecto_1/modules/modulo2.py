@@ -26,8 +26,15 @@ class ListaDobleEnlazda:
         self.cabeza = None
         self.cola = None
         
-    def __len__():
+    def __len__(self):
         """Devuelve el número de ítems de la lista."""
+        count = 0 # iniciamos el contador
+        actual = self.cabeza # asignamos una variable con la referencia a la cabeza de la lista
+        while actual: # la recorremos y cada vez que nos posicionamos en un nodo agregamos +1 al contador y referenciamos al siguiente nodo
+            count += 1
+            actual = actual.next
+        return count # retornamos el numero de nodos recorridos
+        
         
     def agregar_al_inicio(self,item): 
         """Agrega un nuevo ítem al inicio de la lista."""
@@ -41,10 +48,17 @@ class ListaDobleEnlazda:
             self.cabeza = nuevo_nodo # Finalmente, la cabeza de la lista se actualiza para que apunte al nuevo_nodo.
         
     
-    def agregar_al_final(item): 
+    def agregar_al_final(self,item): 
         """Agrega un nuevo ítem al final de la lista."""
-        
-        
+        nuevo_nodo = Node(item)
+        if self.cabeza is None:
+            self.cabeza = nuevo_nodo
+            self.cola = nuevo_nodo
+        else:
+            nuevo_nodo.prev = self.cola # El nuevo nodo se a punta a la cola de la lista.
+            self.cola.next = nuevo_nodo # La referencia de la cola anterior se apunta al nuevo nodo.
+            self.cola = nuevo_nodo # y finalmente se actualiza la cola de la lista para que almacene el nuevo nodo.
+            
     def insertar(item, posicion):
         """Agrega un nuevo ítem a la lista en "posicion". Si la posición no se pasa como argumento, el ítem debe añadirse al final de la lista. "posicion" es un
         entero que indica la posición en la lista donde se va a insertar el nuevo elemento. Si se
@@ -72,12 +86,25 @@ class ListaDobleEnlazda:
         elementos de la primera lista y los de la segunda. Aprovechar el método concatenar para
         evitar repetir código."""
     
+    def mostrar(self):
+        """Funcion que itera sobre la LDE retornando el valor de sus nodos"""
+        actual = self.cabeza
+        while actual:
+            print(actual.value)
+            actual = actual.next
+
+#------------------------------- Llamado a la LDE para probar sus funciones -------------------------------#
 
 dll = ListaDobleEnlazda()
 print(dll.esta_vacia())
 dll.agregar_al_inicio(10)
 dll.agregar_al_inicio(20)
 dll.agregar_al_inicio(30)
+dll.agregar_al_final(40)
 print(dll.esta_vacia())
+print(len(dll))
+dll.mostrar()
 dll.limpiar()
 print(dll.esta_vacia())
+
+
