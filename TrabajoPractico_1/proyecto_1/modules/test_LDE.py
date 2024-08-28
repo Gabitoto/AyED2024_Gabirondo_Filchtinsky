@@ -129,3 +129,48 @@ class Test_LDE(unittest.TestCase):
                          "El nodo anexado a la lista vacia no contiene el valor que se solicito agregar")
         self.assertIs(lde1_copia.cabeza, lde1_copia.cola,
                       "En una lista de un elemento, la cabeza es la misma que la cola")
+        
+    def test_operador_len(self):
+        """Prueba que este sobrecargado el operador len() para la LDE"""
+        self.assertEqual(len(self.lde_1), 0, "No funciona el operador len() en la LDE")
+        self.assertEqual(len(self.lde_2), self.n_elementos, "No funciona el operador len() en la LDE")
+        
+    def recorrer_lista(self, lista):
+        """
+        Metodo auxiliar para usar en tests de métodos complejos
+        de la clase lista doblemente enlazada. Verifica que los nodos de la lista
+        esten bien enlazados entre sí (forward y backward).
+        """
+
+        # Recorro de adelante para atras
+        nodo = lista.cabeza
+        counter = 0
+        elementos = []
+
+        self.assertIsNone(nodo.anterior,
+                          "El elemento anterior a la cabeza de la lista debe ser None")
+
+        while nodo is not None:
+            counter += 1
+            elementos.append(nodo.dato)
+            nodo = nodo.siguiente
+
+        self.assertEqual(len(lista), counter,
+                         "Tamaño informado por la lista no coincide con la cantidad de nodos en la misma.")
+
+        # Recorro de atras para adelante
+        nodo = lista.cola
+
+        self.assertIsNone(nodo.siguiente,
+                          "El elemento siguiente a la cola de la lista debe ser None")
+
+        while nodo is not None:
+            counter -= 1
+            self.assertEqual(elementos[counter], nodo.dato,
+                             "Los elementos en la lista recorrida de atras para adelante son diferentes "
+                             "a que si la recorremos de adelante para atrás.")
+            nodo = nodo.anterior
+            
+
+if __name__ == "__main__":
+    unittest.main()

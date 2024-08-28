@@ -5,9 +5,9 @@
 class Node:
     
     def __init__(self,valor):
-        self.value = valor
-        self.next = None
-        self.prev = None
+        self.dato = valor
+        self.siguiente = None
+        self.anterior = None
 
 # Clase ListaDobleEnlazada desde donde se manejaran las acciones o metodos.
 
@@ -32,7 +32,7 @@ class ListaDobleEnlazada:
         actual = self.cabeza # asignamos una variable con la referencia a la cabeza de la lista
         while actual: # la recorremos y cada vez que nos posicionamos en un nodo agregamos +1 al contador y referenciamos al siguiente nodo
             count += 1
-            actual = actual.next
+            actual = actual.siguiente
         return count # retornamos el numero de nodos recorridos
         
         
@@ -43,8 +43,8 @@ class ListaDobleEnlazada:
             self.cabeza = nuevo_nodo
             self.cola = nuevo_nodo
         else:
-            nuevo_nodo.next = self.cabeza # El next del nuevo_nodo apunta al nodo que actualmente es la cabeza de la lista.
-            self.cabeza.prev = nuevo_nodo # El prev del nodo que actualmente es la cabeza de la lista se actualiza para que apunte al nuevo_nodo.
+            nuevo_nodo.siguiente = self.cabeza # El next del nuevo_nodo apunta al nodo que actualmente es la cabeza de la lista.
+            self.cabeza.anterior = nuevo_nodo # El prev del nodo que actualmente es la cabeza de la lista se actualiza para que apunte al nuevo_nodo.
             self.cabeza = nuevo_nodo # Finalmente, la cabeza de la lista se actualiza para que apunte al nuevo_nodo.
         
     
@@ -55,8 +55,8 @@ class ListaDobleEnlazada:
             self.cabeza = nuevo_nodo
             self.cola = nuevo_nodo
         else:
-            nuevo_nodo.prev = self.cola # El nuevo nodo se a punta a la cola de la lista.
-            self.cola.next = nuevo_nodo # La referencia de la cola anterior se apunta al nuevo nodo.
+            nuevo_nodo.anterior = self.cola # El nuevo nodo se a punta a la cola de la lista.
+            self.cola.siguiente = nuevo_nodo # La referencia de la cola anterior se apunta al nuevo nodo.
             self.cola = nuevo_nodo # y finalmente se actualiza la cola de la lista para que almacene el nuevo nodo.
             
     def insertar(item, posicion):
@@ -70,9 +70,17 @@ class ListaDobleEnlazada:
         elementos de los extremos de la lista debe ser O(1). Si se quiere extraer de una posición
         indebida, que se arroje la debida excepción."""
         
-    def copiar():
+    def copiar(self):
         """Realiza una copia de la lista elemento a elemento y devuelve la copia. Verificar
         que el orden de complejidad de este método sea O(n) y no O(n2)."""
+        nueva_lista = ListaDobleEnlazada()
+        nodo_actual = self.cabeza
+
+        while nodo_actual is not None:
+            nueva_lista.agregar_al_final(nodo_actual.dato)
+            nodo_actual = nodo_actual.siguiente
+
+        return nueva_lista
     
     def invertir():
         """Invierte el orden de los elementos de la lista."""
@@ -90,8 +98,8 @@ class ListaDobleEnlazada:
         """Funcion que itera sobre la LDE retornando el valor de sus nodos"""
         actual = self.cabeza
         while actual:
-            print(actual.value)
-            actual = actual.next
+            print(actual.dato)
+            actual = actual.siguiente
 
 #------------------------------- Llamado a la LDE para probar sus funciones -------------------------------#
 
