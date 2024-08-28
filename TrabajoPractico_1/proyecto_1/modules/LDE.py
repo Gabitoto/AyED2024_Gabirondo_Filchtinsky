@@ -11,7 +11,7 @@ class Node:
 
 # Clase ListaDobleEnlazada desde donde se manejaran las acciones o metodos.
 
-class ListaDobleEnlazda:
+class ListaDobleEnlazada:
     
     def __init__(self):
         self.cabeza = None
@@ -19,7 +19,7 @@ class ListaDobleEnlazda:
         
     def esta_vacia(self): 
         """Devuelve True si la lista está vacía."""
-        return self.cabeza is None
+        return self.cabeza is None and self.cola is None
     
     def limpiar(self):
         """Funcion que limpia la lista de todos los nodos o items"""
@@ -95,7 +95,7 @@ class ListaDobleEnlazda:
 
 #------------------------------- Llamado a la LDE para probar sus funciones -------------------------------#
 
-dll = ListaDobleEnlazda()
+dll = ListaDobleEnlazada()
 print(dll.esta_vacia())
 dll.agregar_al_inicio(10)
 dll.agregar_al_inicio(20)
