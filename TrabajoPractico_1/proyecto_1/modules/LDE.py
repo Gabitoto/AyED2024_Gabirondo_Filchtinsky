@@ -8,6 +8,18 @@ class Node:
         self.dato = valor
         self.siguiente = None
         self.anterior = None
+    
+    def obtenerDato(self):
+        return self.dato
+
+    def obtenerSiguiente(self):
+        return self.siguiente
+
+    def asignarDato(self,nuevodato):
+        self.dato = nuevodato
+
+    def asignarSiguiente(self,nuevosiguiente):
+        self.siguiente = nuevosiguiente
 
 # Clase ListaDobleEnlazada desde donde se manejaran las acciones o metodos.
 
@@ -100,6 +112,12 @@ class ListaDobleEnlazada:
         while actual:
             print(actual.dato)
             actual = actual.siguiente
+    
+    def __iter__(self):
+        pass
+    
+    def __next__(self):
+        pass
 
 #------------------------------- Llamado a la LDE para probar sus funciones -------------------------------#
 
