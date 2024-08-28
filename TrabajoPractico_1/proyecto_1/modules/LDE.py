@@ -28,24 +28,21 @@ class ListaDobleEnlazada:
     def __init__(self):
         self.cabeza = None
         self.cola = None
+        self.tamanio = 0
         
     def esta_vacia(self): 
         """Devuelve True si la lista está vacía."""
-        return self.cabeza is None and self.cola is None
+        return self.tamanio == 0
     
     def limpiar(self):
         """Funcion que limpia la lista de todos los nodos o items"""
         self.cabeza = None
         self.cola = None
+        self.tamanio = 0
         
     def __len__(self):
         """Devuelve el número de ítems de la lista."""
-        count = 0 # iniciamos el contador
-        actual = self.cabeza # asignamos una variable con la referencia a la cabeza de la lista
-        while actual: # la recorremos y cada vez que nos posicionamos en un nodo agregamos +1 al contador y referenciamos al siguiente nodo
-            count += 1
-            actual = actual.siguiente
-        return count # retornamos el numero de nodos recorridos
+        return self.tamanio
         
         
     def agregar_al_inicio(self,item): 
@@ -58,6 +55,7 @@ class ListaDobleEnlazada:
             nuevo_nodo.siguiente = self.cabeza # El next del nuevo_nodo apunta al nodo que actualmente es la cabeza de la lista.
             self.cabeza.anterior = nuevo_nodo # El prev del nodo que actualmente es la cabeza de la lista se actualiza para que apunte al nuevo_nodo.
             self.cabeza = nuevo_nodo # Finalmente, la cabeza de la lista se actualiza para que apunte al nuevo_nodo.
+        self.tamanio += 1
         
     
     def agregar_al_final(self,item): 
@@ -70,6 +68,7 @@ class ListaDobleEnlazada:
             nuevo_nodo.anterior = self.cola # El nuevo nodo se a punta a la cola de la lista.
             self.cola.siguiente = nuevo_nodo # La referencia de la cola anterior se apunta al nuevo nodo.
             self.cola = nuevo_nodo # y finalmente se actualiza la cola de la lista para que almacene el nuevo nodo.
+        self.tamanio += 1
             
     def insertar(item, posicion):
         """Agrega un nuevo ítem a la lista en "posicion". Si la posición no se pasa como argumento, el ítem debe añadirse al final de la lista. "posicion" es un
@@ -114,10 +113,11 @@ class ListaDobleEnlazada:
             actual = actual.siguiente
     
     def __iter__(self):
-        pass
+        nodo_actual = self.cabeza
+        while nodo_actual is not None:
+            yield nodo_actual.dato
+            nodo_actual = nodo_actual.siguiente
     
-    def __next__(self):
-        pass
 
 #------------------------------- Llamado a la LDE para probar sus funciones -------------------------------#
 
