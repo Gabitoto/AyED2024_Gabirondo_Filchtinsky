@@ -75,6 +75,7 @@ class ListaDobleEnlazada:
         entero que indica la posición en la lista donde se va a insertar el nuevo elemento. Si se
         quiere insertar en una posición inválida, que se arroje la debida excepción."""
         
+        
     def extraer(posicion):
         """elimina y devuelve el ítem en "posición". Si no se indica el parámetro
         posición, se elimina y devuelve el último elemento de la lista. La complejidad de extraer
@@ -93,17 +94,28 @@ class ListaDobleEnlazada:
 
         return nueva_lista
     
-    def invertir():
+    def invertir(self):
         """Invierte el orden de los elementos de la lista."""
         
-    def concatenar(Lista):
+        
+    def concatenar(self,Lista):
         """Recibe una lista como argumento y retorna la lista actual con la lista
         pasada como parámetro concatenada al final de la primera."""
+        
+        if self.esta_vacia():
+            self.cabeza = Lista.cabeza
+            self.cola = Lista.cola
+        else:
+            for item in Lista:
+                self.agregar_al_final(item)
+        return self
     
-    def __add__(Lista):
+    def __add__(self,Lista):
         """El resultado de “sumar” dos listas debería ser una nueva lista con los
         elementos de la primera lista y los de la segunda. Aprovechar el método concatenar para
         evitar repetir código."""
+        copia_lista1 = self.copiar()
+        return copia_lista1.concatenar(Lista)
     
     def mostrar(self):
         """Funcion que itera sobre la LDE retornando el valor de sus nodos"""
@@ -113,6 +125,7 @@ class ListaDobleEnlazada:
             actual = actual.siguiente
     
     def __iter__(self):
+        """ Funcion que nos permite iterar sobre la LDE logrando que nos devuelva sus datos y no el nodo en si obteniendo una eficiencia de Memoria ya que no necesitas almacenar todos los elementos en una lista temporal para iterar sobre ellos y simplicidad por que hace que la clase sea iterable sin necesidad de implementar manualmente __iter__() y __next__()."""
         nodo_actual = self.cabeza
         while nodo_actual is not None:
             yield nodo_actual.dato
@@ -128,9 +141,15 @@ dll.agregar_al_inicio(20)
 dll.agregar_al_inicio(30)
 dll.agregar_al_final(40)
 print(dll.esta_vacia())
+dll2 = dll.copiar()
+print(len(dll2))
 print(len(dll))
+dll2.concatenar(dll)
+print(len(dll2))
 dll.mostrar()
+print()
+dll2.mostrar()
+ob = dll + dll2
+print(len(ob))
 dll.limpiar()
 print(dll.esta_vacia())
-
-
