@@ -299,6 +299,158 @@ class Test_LDE(unittest.TestCase):
             nodo_original = nodo_original.siguiente
             nodo_concat = nodo_concat.siguiente
             
+    def test_insertar_extremos(self):
+        """
+        inserto ítems en los extremos de la LDE, compruebo
+        tamaño correcto y su valor.
+        """
+
+        """inserto 1er item al inicio"""
+        self.lde_2.insertar(120, 0)
+        self.n_elementos += 1
+        self.assertEqual(len(self.lde_2), self.n_elementos)
+        self.assertEqual(self.lde_2.cabeza.dato, 120)
+
+        """inserto 2do item en la última posición"""
+        self.lde_2.insertar(180, len(self.lde_2) - 1)
+        self.n_elementos += 1
+        self.assertEqual(len(self.lde_2), self.n_elementos)
+        nodo_actual = self.lde_2.cabeza
+        nodo_anterior = None
+        valor = None
+        while nodo_actual.siguiente:
+            nodo_anterior = nodo_actual
+            nodo_actual = nodo_actual.siguiente
+            valor = nodo_anterior.dato
+        self.assertEqual(valor, 180)
+
+    def test_insertar_interior(self):
+        """
+        pruebo insertar un ítem en una posición aleatoria
+        de la LDE y compruebo que el elemento es insertado
+        """
+        # print(f"\nPosición aleatoria donde se inserta: {self.posicion}")
+        posicion = random.randint(1, self.n_elementos - 1)
+
+        self.lde_2.insertar(250, posicion)
+        self.n_elementos += 1
+        self.assertEqual(self.lde_2.tamanio, self.n_elementos)
+
+        contador = 0
+        nodo_actual = self.lde_2.cabeza
+        valor = None
+        while nodo_actual and contador != posicion:
+            contador += 1
+            nodo_actual = nodo_actual.siguiente
+            valor = nodo_actual.dato
+
+        self.assertEqual(valor, 250)
+
+    def test_excepciones_insertar(self):
+        """
+        intento insertar en posiciones incorrectas o no existentes de
+        la LDE y compruebo que se lanzan las excepciones correspondientes
+        """
+        self.assertRaises(Exception, self.lde_2.insertar, 210, -10,
+                          "La LDE debe arrojar excepcion al intentar insertar en posición negativa")
+        self.assertRaises(Exception, self.lde_2.insertar, 210, self.n_elementos + 10,
+                          "La LDE debe arrojar excepcion al intentar insertar en posición mayor al tamaño")
+
+    def test_extraer_extremos(self):
+        """
+        pruebo extraer ítems al inicio y al final de la LDE
+        con/sin parámetro, verifico el valor extraído y el tamaño
+        resultante de la LDE
+        """
+        # Extraer al inicio
+        self.assertEqual(self.lde_3.extraer(0), self.lista_aux_3.pop(0),
+                         "No se extrajo correctamente los elementos de la lista")
+        self.assertEqual(len(self.lde_3), self.n_elementos - 1,
+                         "No se actualizo debidamente el tamaño de la lista luego de extraer")
+        # Verificamos que la lista este correctamente enlazada
+        self.recorrer_lista(self.lde_3)
+
+        # Extraer al final sin parámetro
+        self.assertEqual(self.lde_3.extraer(), self.lista_aux_3.pop(),
+                         "Cuando no se pasa argumento, se debe extraer el ultimo elemento de la lista")
+        self.assertEqual(len(self.lde_3), self.n_elementos - 2,
+                         "No se actualizo debidamente el tamaño de la lista luego de extraer")
+        # Verificamos que la lista este correctamente enlazada
+        self.recorrer_lista(self.lde_3)
+
+        # Extraer al final usando parámetro
+        self.assertEqual(self.lde_3.extraer(len(self.lde_3) - 1), self.lista_aux_3.pop(),
+                         "No se extrajo correctamente los elementos de la lista")
+        self.assertEqual(self.lde_3.tamanio, self.n_elementos - 3,
+                         "No se actualizo debidamente el tamaño de la lista luego de extraer")
+        # Verificamos que la lista este correctamente enlazada
+        self.recorrer_lista(self.lde_3)
+
+        # Extraer al final parámetro -1
+        self.assertEqual(self.lde_3.extraer(-1), self.lista_aux_3.pop(),
+                         "No se extrajo correctamente los elementos de la lista")
+        self.assertEqual(self.lde_3.tamanio, self.n_elementos - 4,
+                         "No se actualizo debidamente el tamaño de la lista luego de extraer")
+        # Verificamos que la lista este correctamente enlazada
+        self.recorrer_lista(self.lde_3)
+
+    def test_extraer_interior(self):
+        """
+        extraigo un elemento de una posición aleatoria de la lista
+        con elementos no repetidos y compruebo que el mismo no permanece
+        en la lista
+        """
+        posicion = random.randint(1, self.n_elementos - 1)
+        lde3_copia = self.lde_3.copiar()
+
+        item = lde3_copia.extraer(posicion)
+
+        # Verifico tamaño
+        self.assertEqual(len(lde3_copia), len(self.lde_3) - 1,
+                         "No se modifico correctamente el tamaño de la lista luego de la extracción")
+
+        # Verifico que este correctamente enlazada
+        self.recorrer_lista(lde3_copia)
+
+        nodo_original = self.lde_3.cabeza
+        nodo_copia = lde3_copia.cabeza
+        contador_pos = 0
+        while nodo_original is not None:
+            if contador_pos == posicion:
+                self.assertEqual(nodo_original.dato, item,
+                                 "El elemento extraido no coincide con el elemento originariamente en la posicion solicitada")
+                nodo_original = nodo_original.siguiente
+            self.assertEqual(nodo_original.dato, nodo_copia.dato,
+                             "Luego de la extracción los demás elementos de la lista se vieron alterados")
+            nodo_original = nodo_original.siguiente
+            nodo_copia = nodo_copia.siguiente
+            contador_pos += 1
+
+    def test_excepciones_extraer(self):
+        """
+        pruebo extraer en una lista vacía y en posiciones fuera
+        de los límites de la LDE. Compruebo las excepciones
+        """
+        # LDE vacía
+        self.assertRaises(Exception, self.lde_1.extraer,
+                          "Extraer de una lista vacia deberia arrojar un error")
+        self.assertRaises(Exception, self.lde_1.extraer, 0,
+                          "Extraer de una lista vacia deberia arrojar un error")
+        self.assertRaises(Exception, self.lde_1.extraer, -1,
+                          "Extraer de una lista vacia deberia arrojar un error")
+        self.assertRaises(Exception, self.lde_1.extraer, self.n_elementos - 1,
+                          "Extraer de una lista vacia deberia arrojar un error")
+        self.assertRaises(Exception, self.lde_1.extraer, self.n_elementos + 10,
+                          "Extraer de una lista vacia deberia arrojar un error")
+        self.assertRaises(Exception, self.lde_1.extraer, -(self.n_elementos + 10),
+                          "Extraer de una lista vacia deberia arrojar un error")
+
+        # LDE no vacia
+        self.assertRaises(Exception, self.lde_2.extraer, -50,
+                          "Extraer de una posicion negativa dede arrojar error")
+        self.assertRaises(Exception, self.lde_2.extraer, self.n_elementos + 50,
+                          "Extraer de una posicion mayor al tamaño de la lista menos uno dede arrojar error")
+            
 
 if __name__ == "__main__":
     unittest.main()

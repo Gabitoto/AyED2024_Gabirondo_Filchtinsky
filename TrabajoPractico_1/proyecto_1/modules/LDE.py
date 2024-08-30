@@ -71,9 +71,9 @@ class ListaDobleEnlazada:
         self.tamanio += 1
             
     def insertar(item, posicion):
-        """Agrega un nuevo ítem a la lista en "posicion". Si la posición no se pasa como argumento, el ítem debe añadirse al final de la lista. "posicion" es un
-        entero que indica la posición en la lista donde se va a insertar el nuevo elemento. Si se
-        quiere insertar en una posición inválida, que se arroje la debida excepción."""
+        """Agrega un nuevo ítem a la lista en "posicion". Si la posición no se pasa como argumento, el ítem debe añadirse al final de la lista. 
+        "posicion" es un entero que indica la posición en la lista donde se va a insertar el nuevo elemento. 
+        Si se quiere insertar en una posición inválida, que se arroje la debida excepción."""
         
         
     def extraer(posicion):
@@ -94,10 +94,19 @@ class ListaDobleEnlazada:
 
         return nueva_lista
     
-    def invertir(self):
+    def invertir(self): # Explicar despues
         """Invierte el orden de los elementos de la lista."""
-        
-        
+        actual_nodo = self.cabeza
+        while actual_nodo is not None:
+            temp = actual_nodo.siguiente
+            actual_nodo.siguiente = actual_nodo.anterior
+            actual_nodo.anterior = temp
+            actual_nodo = temp
+            
+        self.cabeza,self.cola = self.cola,self.cabeza
+        return self
+    
+     
     def concatenar(self,Lista):
         """Recibe una lista como argumento y retorna la lista actual con la lista
         pasada como parámetro concatenada al final de la primera."""
