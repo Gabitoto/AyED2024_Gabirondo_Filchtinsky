@@ -70,17 +70,84 @@ class ListaDobleEnlazada:
             self.cola = nuevo_nodo # y finalmente se actualiza la cola de la lista para que almacene el nuevo nodo.
         self.tamanio += 1
             
-    def insertar(item, posicion):
+    def insertar(self,item, posicion = None):
         """Agrega un nuevo ítem a la lista en "posicion". Si la posición no se pasa como argumento, el ítem debe añadirse al final de la lista. 
         "posicion" es un entero que indica la posición en la lista donde se va a insertar el nuevo elemento. 
         Si se quiere insertar en una posición inválida, que se arroje la debida excepción."""
         
+        nodo_a_insertar = Node(item)
         
-    def extraer(posicion):
+        if self.esta_vacia() or posicion == 0:
+            self.agregar_al_inicio(item)
+            return
+        
+        if posicion is None:
+            self.agregar_al_final(item)
+            return
+        
+        if posicion < 0 or posicion > self.tamanio:
+            raise IndexError("Posicion fuera de rango")
+        
+        else:
+            nodo_actual = self.cabeza
+            for x in range(posicion-1):
+                nodo_actual = nodo_actual.siguiente
+        
+            nodo_a_insertar.siguiente = nodo_actual.siguiente
+            nodo_a_insertar.anterior = nodo_actual
+            
+            if nodo_actual.siguiente is not None:
+                nodo_actual.siguiente.anterior = nodo_a_insertar
+                nodo_actual.siguiente = nodo_a_insertar
+            if posicion == self.tamanio:
+                self.cola = nodo_a_insertar
+            
+        self.tamanio += 1
+                 
+        
+    def extraer(self, posicion = None):
         """elimina y devuelve el ítem en "posición". Si no se indica el parámetro
         posición, se elimina y devuelve el último elemento de la lista. La complejidad de extraer
         elementos de los extremos de la lista debe ser O(1). Si se quiere extraer de una posición
         indebida, que se arroje la debida excepción."""
+        if self.esta_vacia():
+            raise IndexError("No se puede extraer de un lista vacia")
+        
+        if posicion is not None and (posicion < -1 or posicion >= self.tamanio):
+            raise IndexError("Índice fuera de rango")
+        
+        if posicion == 0:
+            valor = self.cabeza.dato
+            self.cabeza = self.cabeza.siguiente
+            if self.cabeza is not None:
+                self.cabeza.anterior = None
+            else:
+                self.cola = None
+            self.tamanio -= 1
+            return valor
+        
+        if posicion is None or posicion == self.tamanio - 1 or posicion == -1:
+            valor = self.cola.dato
+            self.cola = self.cola.anterior
+            if self.cola is not None:
+                self.cola.siguiente = None
+            else:
+                self.cabeza = None
+            self.tamanio -= 1
+            return valor
+        
+        else:
+            nodo_actual = self.cabeza
+            for _ in range(posicion):
+                nodo_actual = nodo_actual.siguiente
+    
+            valor = nodo_actual.dato
+            nodo_actual.anterior.siguiente = nodo_actual.siguiente
+            nodo_actual.siguiente.anterior = nodo_actual.anterior
+    
+        self.tamanio -= 1
+        return valor
+        
         
     def copiar(self):
         """Realiza una copia de la lista elemento a elemento y devuelve la copia. Verificar
