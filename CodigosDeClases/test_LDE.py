@@ -31,7 +31,7 @@ class Test_LDE(unittest.TestCase):
 
         # self.posicion = random.randint(1, self.n_elementos - 1)  # randint incluye el extremo
 
-    def test_iteracion(self):
+    def test_iteracion(self): # YA ESTA
         """
         Verificamos que tenga sobrecargado los métodos necesarios para ser
         iterado en un bucle for.
@@ -45,7 +45,7 @@ class Test_LDE(unittest.TestCase):
                              "obtenidos por recorrido manual de la LDE desde la cabeza")
             nodo = nodo.siguiente
 
-    def test_agregar_al_inicio(self):
+    def test_agregar_al_inicio(self): # YA ESTA
         """
         pruebo que al agregar elementos al inicio de la lista
         la misma tiene tamaño correcto y se llena correctamente
@@ -85,7 +85,7 @@ class Test_LDE(unittest.TestCase):
         self.assertIs(lde1_copia.cabeza, lde1_copia.cola,
                       "En una lista de un elemento, la cabeza es la misma que la cola")
 
-    def test_agregar_al_final(self):
+    def test_agregar_al_final(self): # YA ESTA
         """
         pruebo que al anexar elementos al final de la lista
         la misma tiene tamaño correcto y se llena correctamente
@@ -280,14 +280,14 @@ class Test_LDE(unittest.TestCase):
         self.assertRaises(Exception, self.lde_2.extraer, self.n_elementos + 50,
                           "Extraer de una posicion mayor al tamaño de la lista menos uno dede arrojar error")
 
-    def test_operador_len(self):
+    def test_operador_len(self): # YA ESTA
         """
         Prueba que este sobrecargado el operador len() para la LDE
         """
         self.assertEqual(len(self.lde_1), 0, "No funciona el operador len() en la LDE")
         self.assertEqual(len(self.lde_2), self.n_elementos, "No funciona el operador len() en la LDE")
 
-    def test_copiar(self):
+    def test_copiar(self): # YA ESTA
         """
         hago una copia de una LDE con elementos y sin elementos
         y comparo nodo a nodo para verificar la copia.
@@ -319,7 +319,7 @@ class Test_LDE(unittest.TestCase):
             nodo_original = nodo_original.siguiente
             nodo_copia = nodo_copia.siguiente
 
-    def test_invertir(self):
+    def test_invertir(self): # YA ESTA
 
         """
         Creo una LDE con elementos aleatorios, realizo una copia de la misma,
@@ -349,7 +349,7 @@ class Test_LDE(unittest.TestCase):
             # Avanzo al siguiente nodo de lista original
             nodo_original = nodo_original.anterior
 
-    def recorrer_lista(self, lista):
+    def recorrer_lista(self, lista): # YA ESTA
         """
         Metodo auxiliar para usar en tests de métodos complejos
         de la clase lista doblemente enlazada. Verifica que los nodos de la lista
@@ -385,7 +385,7 @@ class Test_LDE(unittest.TestCase):
                              "a que si la recorremos de adelante para atrás.")
             nodo = nodo.anterior
 
-    def test_metodo_concatenar(self):
+    def test_metodo_concatenar(self): # YA ESTA
         """
         Verifico que funcione bien la concatenacion de listas mediante el metodo
         concatenar. El metodo modifica la instancia que realiza la invocacion.
@@ -416,7 +416,7 @@ class Test_LDE(unittest.TestCase):
             nodo_original = nodo_original.siguiente
             nodo_concat = nodo_concat.siguiente
 
-    def test_operador_add(self):
+    def test_operador_add(self): # YA ESTA
         """
         Verifico que funcione la concatenacion de listas mediante
         el uso del operador +
