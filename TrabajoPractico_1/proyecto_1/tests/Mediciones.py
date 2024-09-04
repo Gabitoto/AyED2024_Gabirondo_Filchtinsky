@@ -3,7 +3,10 @@
 import time 
 import matplotlib.pyplot as plt
 from random import randint as r
-from modules.modulo1 import BubbleSort, ordenamientoRapido, radix_sort
+from modules.radixSort import radix_sort
+from modules.burbuja import BubbleSort
+from modules.quickSort import ordenamientoRapido
+
 
 
 tamaños = list(range(1, 800))
