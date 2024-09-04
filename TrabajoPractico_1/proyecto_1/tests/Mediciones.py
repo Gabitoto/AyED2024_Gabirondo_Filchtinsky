@@ -6,14 +6,18 @@ from random import randint as r
 from modules.modulo1 import BubbleSort, ordenamientoRapido, radix_sort
 
 
-tamaños = list(range(1, 500))
+tamaños = list(range(1, 800))
+
 tiempos_burbuja = []
 tiempos_quicksort = []
 tiempos_radix = []
+
 fig, ax = plt.subplots()
+
 for tamaño in tamaños:
     lista = [r(10000, 99999) for _ in range(tamaño)]
     lista2 = [str(r(10000, 99999)) for _ in range(tamaño)]
+    
     inicio = time.time()
     BubbleSort(lista.copy())
     tiempos_burbuja.append(time.time() - inicio)
