@@ -17,6 +17,7 @@ class Carta:
         self.carta_arriba = carta
     def asignar_abajo(self, carta):
         self.carta_abajo = carta
+        
     @property
     def visible(self):
         return self._visible
