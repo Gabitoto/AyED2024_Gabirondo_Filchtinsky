@@ -1,3 +1,5 @@
+
+# Clase Carta = Clase que se comportara como nuestro Nodo.
 class Carta:
     
     def __init__(self, dato='', palo='', carta_arriba = None, carta_abajo = None):
@@ -13,12 +15,17 @@ class Carta:
     def asignar_abajo(self, carta):
         self.carta_abajo = carta
         
-    @property
+# Decoradores = Los decoradores en Python son una manera de modificar el comportamiento de funciones o métodos sin alterar directamente su código. Se usan comúnmente para reutilizar lógica, como agregar validaciones o realizar tareas antes o después de que una función se ejecute.
+# Los decoradores son funciones que reciben como argumento otra función o método, le añaden comportamiento y devuelven una nueva función con esa modificación.
+        
+    @property  # Este convierte métodos en "atributos calculados". Esto permite que accedamos a métodos como si fueran atributos normales, pero con la capacidad de añadir lógica al obtener o asignar valores.
     def visible(self):
         return self._visible
         
-    @visible.setter
+    @visible.setter # Este decorador indica que este método es el "setter", es decir, define lo que ocurre cuando intentas asignar un valor al atributo visible.
     def visible(self, visible):
+        if not isinstance(visible, bool): # Aquí el setter verifica si el valor es un booleano antes de asignarlo, proporcionando una capa de seguridad sin cambiar el código que usa el atributo.
+            raise ValueError("visible debe ser True o False")
         self._visible = visible
         
     @property
@@ -38,6 +45,7 @@ class Carta:
         self._palo = palo  
     
     def _valor_numerico(self):
+        """Agrega valor numerico a las cartas que posean valores por encima del 10 y se representen con letras."""
         valores = ['J','Q','K','A']
         if self.dato in valores:
             idx = valores.index(self.dato)
@@ -50,6 +58,7 @@ class Carta:
         return self._valor_numerico() > otra._valor_numerico()
         
     def __str__(self):
+        """Funcion que permite settear si una carta es visible o no en caso de que sea visible se mostrara su carga util en caso de que no un "-X"."""
         if self.visible == False:
             return "-X"
         else:
