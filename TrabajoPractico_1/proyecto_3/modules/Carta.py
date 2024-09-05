@@ -6,10 +6,13 @@ class Carta:
         self.visible:bool = False
         self.carta_arriba = carta_arriba
         self.carta_abajo = carta_abajo
+        
     def asignar_arriba(self, carta):
         self.carta_arriba = carta
+        
     def asignar_abajo(self, carta):
         self.carta_abajo = carta
+        
     @property
     def visible(self):
         return self._visible
@@ -47,18 +50,17 @@ class Carta:
         return self._valor_numerico() > otra._valor_numerico()
         
     def __str__(self):
-        #if self.visible == False:
-         #   return "-X"
-        #else:
-            return self
+        if self.visible == False:
+            return "-X"
+        else:
+            return f"{self.dato} {self.palo}"
     
     def __repr__(self):
         return str(self)
     
     
-#if __name__ == "__main__":
-#    carta = Carta("♣", "3")
-#    print(carta)
-#    carta.visible = True
-#    print(carta)
-#    
+if __name__ == "__main__":
+    carta = Carta("♣", "3")
+    print(carta)
+    carta.visible = True
+    print(carta) 

@@ -1,6 +1,6 @@
 
-from modules.Carta import Carta
-from modules.Mazo import Mazo
+from Carta import Carta
+from Mazo import Mazo
 import unittest
 
 

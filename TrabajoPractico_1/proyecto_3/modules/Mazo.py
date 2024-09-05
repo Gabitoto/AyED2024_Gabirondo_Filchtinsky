@@ -1,61 +1,48 @@
 
 
 from Carta import Carta
-
-
+from LDE import ListaDobleEnlazada
 
 class DequeEmptyError(Exception):
     """Un jugador se ha quedado sin cartas"""
-    pass
+    def __init__(self,message = "Un jugador se ha quedado sin cartas"):
+        self.massage = message
 
 class Mazo():
     def __init__ (self):
-        self.cabeza = None
-        self.cola = None
-        self.tamanio = 0
+        self.mazo = ListaDobleEnlazada()
         
     def poner_carta_arriba(self, carta):
-         
-        if self.cabeza == None:
-            self.cabeza = carta
-            self.cola = carta
-            self.tamanio +=1 
-        else:
+        self.mazo.agregar_al_inicio(carta)
+        self.cabeza = carta
             
-            self.cabeza.asignar_arriba(carta)
-            carta.asignar_abajo(self.cabeza)
-            self.cabeza = carta
-            self.tamanio +=1 
     def poner_carta_abajo(self,carta):
-            if self.cola == None:
-                self.cabeza = carta
-                self.cola = carta  
-                self.tamanio +=1 
-            else:
-                self.cola.asignar_abajo(carta)
-                carta.asignar_arriba(self.cola)
-                self.cola = carta
-                self.tamanio +=1 
+        carta.visible = False
+        self.mazo.agregar_al_final(carta)
+        self.cola = carta
     
     def sacar_carta_arriba(self):
-        if self.tamanio > 0 and self.cabeza is not None:
-            carta_a_sacar = self.cabeza
-            carta_a_sacar.visible = True
-            self.cabeza = self.cabeza.carta_abajo
-            self.tamanio -= 1
-            return carta_a_sacar
+        if self.mazo.tamanio > 0 and self.mazo.cabeza is not None:
+            carta = self.mazo.extraer(0)
+            carta.visible = True
+            return carta
         else:   
             raise DequeEmptyError
         
         
     def __len__ (self):
-        
-        return self.tamanio
+        return self.mazo.__len__()
 
-        
-        
-carta = Carta('4', 'treboles')
-carta2 = Carta('5', 'treboles')
-carta3 = Carta('10', 'treboles')
-carta4 = Carta('1', 'treboles')
-mazo = Mazo()
+if __name__ == "__main__":             
+    carta = Carta('4', 'treboles')
+    carta2 = Carta('5', 'treboles')
+    carta3 = Carta('10', 'treboles')
+    carta4 = Carta('1', 'treboles')
+    mazo = Mazo()
+    mazo.poner_carta_arriba(carta)
+    mazo.poner_carta_arriba(carta2)
+    mazo.poner_carta_arriba(carta3)
+    mazo.poner_carta_arriba(carta4)
+    carta.visible = True
+    print(carta)
+    print(len(mazo))
