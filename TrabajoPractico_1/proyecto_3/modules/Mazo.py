@@ -1,7 +1,7 @@
 
 
-from Carta import Carta  
-from LDE import ListaDobleEnlazada
+from modules.Carta import Carta  
+from modules.LDE import ListaDobleEnlazada
 
 # Explicacion de un DequeEmptyError(Exception) = Es una excepción personalizada que se lanza cuando intentas realizar una operación en un deque (doblemente terminado) vacío, como extraer un elemento cuando no hay ninguno disponible.
 class DequeEmptyError(Exception):

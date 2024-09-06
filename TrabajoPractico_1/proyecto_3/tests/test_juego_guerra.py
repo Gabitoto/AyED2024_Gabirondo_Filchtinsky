@@ -16,7 +16,7 @@ sys.path.append(parent_dir)
 
 
 
-from juego_guerra import JuegoGuerra
+from modules.juego_guerra import JuegoGuerra
 import unittest
 
 
