@@ -14,6 +14,7 @@ tamaños = list(range(1, 800))
 tiempos_burbuja = []
 tiempos_quicksort = []
 tiempos_radix = []
+tiempos_sorted = []
 
 fig, ax = plt.subplots()
 
@@ -32,11 +33,16 @@ for tamaño in tamaños:
     inicio = time.time()
     radix_sort(lista2.copy())
     tiempos_radix.append(time.time() - inicio)
+    
+    inicio = time.time()
+    sorted(lista.copy())
+    tiempos_sorted.append(time.time() - inicio)
 
 # Graficar los tiempos de ejecución
 ax.plot(tamaños, tiempos_burbuja, label='Burbuja')
 ax.plot(tamaños, tiempos_quicksort, label='Quicksort')
 ax.plot(tamaños, tiempos_radix, label='Radix Sort')
+ax.plot(tamaños, tiempos_sorted, label='funcion Build-in Sorted')
 ax.set_xlabel('Tamaño de la lista')
 ax.set_ylabel('Tiempo de ejecución (segundos)')
 ax.legend()
