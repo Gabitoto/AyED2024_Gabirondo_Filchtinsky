@@ -23,6 +23,9 @@ def counting_sort_strings(arr, exp):
         arr[i] = output[i]
 
 def radix_sort(arr):
+    """comienza por el dígito menos significativo (LSD - Least Significant Digit) o el dígito más significativo (MSD - Most Significant Digit),
+    dependiendo de la variante luego agrupa a los números en cubetas (buckets) según el valor del dígito actual después los ordenar por un dígito,
+    repite el proceso para el siguiente dígito y una vez procesados todos los dígitos, los números estarán completamente ordenados."""
     max_val = max(arr, key=int)
 
     exp = 1

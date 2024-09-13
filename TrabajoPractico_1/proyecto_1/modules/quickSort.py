@@ -1,7 +1,10 @@
 # Quick Sort
 
 def ordenamientoRapido(unaLista):
-   ordenamientoRapidoAuxiliar(unaLista,0,len(unaLista)-1)
+    """Este Ordenamiento selecciona un pivote (puede ser el primer, último o un elemento aleatorio) luego particiona la 
+    lista: coloca los elementos menores que el pivote a la izquierda y los mayores a la derecha y aplica quicksort de forma
+    recursiva a las sublistas de la izquierda y la derecha combinando las sublistas ordenadas."""
+    ordenamientoRapidoAuxiliar(unaLista,0,len(unaLista)-1)
 
 def ordenamientoRapidoAuxiliar(unaLista,primero,ultimo):
    if primero<ultimo:
