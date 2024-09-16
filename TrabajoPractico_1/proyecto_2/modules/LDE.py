@@ -161,7 +161,7 @@ class ListaDobleEnlazada:
 
         return nueva_lista
     
-    def invertir(self): # Explicar despues
+    def invertir(self):
         """Invierte el orden de los elementos de la lista."""
         actual_nodo = self.cabeza
         while actual_nodo is not None:
