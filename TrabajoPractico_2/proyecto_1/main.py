@@ -10,7 +10,7 @@ import random
 
 n = 20  # cantidad de ciclos de simulación
 
-cola_de_espera = list()
+cola_de_espera = list() # aca vamos a meter la estructura de cola de prioridad
 
 # Ciclo que gestiona la simulación
 for i in range(n):
