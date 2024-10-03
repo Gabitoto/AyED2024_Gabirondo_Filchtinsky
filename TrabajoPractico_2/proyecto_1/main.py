@@ -7,14 +7,14 @@ import time
 import datetime
 import modules.paciente as pac
 import random
-
+import modules.Cola_Prioridad_MB as cp
 n = 20  # cantidad de ciclos de simulación
 
-cola_de_espera = list() # aca vamos a meter la estructura de cola de prioridad
+cola_de_espera = cp.cola_Prioridad()
 
 # Ciclo que gestiona la simulación
 for i in range(n):
-    # Fecha y hora de entrada de un paciente
+    #Fecha y hora de entrada de un paciente
     ahora = datetime.datetime.now()
     fecha_y_hora = ahora.strftime('%d/%m/%Y %H:%M:%S')
     print('-*-'*15)
@@ -22,13 +22,14 @@ for i in range(n):
 
     # Se crea un paciente un paciente por segundo
     # La criticidad del paciente es aleatoria
+    
     paciente = pac.Paciente()
-    cola_de_espera.append(paciente)
-
+    cola_de_espera.insertar(paciente)
+    
     # Atención de paciente en este ciclo: en el 50% de los casos
     if random.random() < 0.5:
         # se atiende paciente que se encuentra al frente de la cola
-        paciente_atendido = cola_de_espera.pop(0)
+        paciente_atendido = cola_de_espera.eliminarMin()
         print('*'*40)
         print('Se atiende el paciente:', paciente_atendido)
         print('*'*40)
@@ -39,12 +40,11 @@ for i in range(n):
     print()
 
     # Se muestran los pacientes restantes en la cola de espera
-    print('Pacientes que faltan atenderse:', len(cola_de_espera))
-    for paciente in cola_de_espera:
+    print('Pacientes que faltan atenderse:', cola_de_espera.tamanoActual)
+    for paciente in cola_de_espera.listaMonticulo:
         print('\t', paciente)
     
     print()
     print('-*-'*15)
     
     time.sleep(1)
-
