@@ -14,9 +14,7 @@ class cola_Prioridad:
     def insertar(self,k):
         self.listaMonticulo.append(k)
         self.tamanoActual = self.tamanoActual + 1
-        if self.tamanoActual > 2:
-            self.infiltArriba(self.tamanoActual)
-        
+        self.infiltArriba(self.tamanoActual)
         
     def infiltAbajo(self,i):
         while (i * 2) <= self.tamanoActual:
@@ -26,6 +24,7 @@ class cola_Prioridad:
                 self.listaMonticulo[i] = self.listaMonticulo[hm]
                 self.listaMonticulo[hm] = tmp
             i = hm
+            
     def hijoMin(self,i):
         if i * 2 + 1 > self.tamanoActual:
             return i * 2
@@ -35,11 +34,14 @@ class cola_Prioridad:
             else:   
                 return i * 2 + 1
     
-    
-    
     def eliminarMin(self):
+        if self.tamanoActual == 0:
+            return None
         valorSacado = self.listaMonticulo[1]
-        self.tamanoActual = self.tamanoActual - 1
-        self.listaMonticulo.pop(1)
+        self.listaMonticulo[1] = self.listaMonticulo[self.tamanoActual]
+        self.listaMonticulo.pop()  # Elimina el último elemento
+        self.tamanoActual -= 1
         self.infiltAbajo(1)
         return valorSacado
+
+
