@@ -8,6 +8,7 @@ import datetime
 import modules.paciente as pac
 import random
 import modules.Cola_Prioridad_MB as cp
+
 n = 20  # cantidad de ciclos de simulación
 
 cola_de_espera = cp.cola_Prioridad()
@@ -20,10 +21,11 @@ for i in range(n):
     print('-*-'*15)
     print('\n', fecha_y_hora, '\n')
 
-    # Se crea un paciente un paciente por segundo
+    # Se crea un paciente por segundo
     # La criticidad del paciente es aleatoria
     
     paciente = pac.Paciente()
+    
     cola_de_espera.insertar(paciente)
     
     # Atención de paciente en este ciclo: en el 50% de los casos

@@ -2,7 +2,7 @@ class cola_Prioridad:
     def __init__(self):
         self.listaMonticulo = [0]
         self.tamanoActual = 0
-        
+    
     def infiltArriba(self, i):
         while i // 2 > 0:  
             if self.listaMonticulo[i].riesgo < self.listaMonticulo[i // 2].riesgo:
