@@ -1,34 +1,35 @@
-class ArbolBinario:
-    def __init__(self,objetoRaiz):
-        self.clave = objetoRaiz
-        self.hijoIzquierdo = None
-        self.hijoDerecho = None
+from modules.AVL import NodoArbol,ArbolBinarioBusqueda
+
+class Temperaturas_DB:
+    def __init__(self):
+        pass 
         
-    def insertarIzquierdo(self,nuevoNodo):
-        if  self.hijoIzquierdo == None:
-            self.hijoIzquierdo = ArbolBinario(nuevoNodo)
-        else:
-            t = ArbolBinario(nuevoNodo)
-            t.hijoIzquierdo = self.hijoIzquierdo
-            self.hijoIzquierdo = t
-    
-    def insertarDerecho(self,nuevoNodo):
-        if  self.hijoDerecho == None:
-            self.hijoDerecho = ArbolBinario(nuevoNodo)
-        else:
-            t = ArbolBinario(nuevoNodo)
-            t.hijoDerecho = self.hijoDerecho
-            self.hijoDerecho = t
-    
-    def obtenerHijoDerecho(self):
-        return self.hijoDerecho
-
-    def obtenerHijoIzquierdo(self):
-        return self.hijoIzquierdo
-
-    def asignarValorRaiz(self,obj):
-        self.clave = obj
-
-    def obtenerValorRaiz(self):
-        return self.clave
-    
+    def guardar_temperatura(temperatura, fecha):
+        """guarda la medida de temperatura asociada a la fecha."""
+        pass
+    def devolver_temperatura(fecha): 
+        """devuelve la medida de temperatura en la fecha determinada."""
+        pass
+    def max_temp_rango(fecha1, fecha2): 
+        """devuelve la temperatura máxima entre los rangos"""
+        pass
+    def fecha1_y_fecha2_inclusive(fecha1,fecha2):
+        """Esto no implica que los intervalos del rango deban ser fechas incluidas previamente en el árbol."""
+        pass
+    def min_temp_rango(fecha1, fecha2): 
+        """devuelve la temperatura mínima entre los rangos fecha1 y fecha2 inclusive (fecha1 < fecha2).
+        Esto no implica que los intervalos del rango deban ser fechas incluidas previamente en el árbol."""
+        pass
+    def temp_extremos_rango(fecha1, fecha2): 
+        """devuelve la temperatura mínima y máxima entre los rangos fecha1 y fecha2 inclusive (fecha1 < fecha2)."""
+        pass
+    def borrar_temperatura(fecha): 
+        """recibe una fecha y elimina del árbol la medición correspondiente a esa fecha."""
+        pass
+    def devolver_temperaturas(fecha1, fecha2): 
+        """devuelve un listado de las mediciones de temperatura en el rango recibido por parámetro con el formato “dd/mm/aaaa: temperatura
+        ºC”, ordenado por fechas."""
+        pass
+    def cantidad_muestras(): 
+        """devuelve la cantidad de muestras de la BD."""
+        pass
