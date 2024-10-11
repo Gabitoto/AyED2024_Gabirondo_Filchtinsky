@@ -2,7 +2,8 @@ from modules.AVL import NodoArbol,ArbolBinarioBusqueda
 
 class Temperaturas_DB:
     def __init__(self):
-        pass 
+        self.cuerpo = ArbolBinarioBusqueda()
+        
         
     def guardar_temperatura(temperatura, fecha):
         """guarda la medida de temperatura asociada a la fecha."""
