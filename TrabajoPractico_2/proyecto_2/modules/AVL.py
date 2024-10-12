@@ -39,6 +39,16 @@ class NodoArbol:
             self.hijoIzquierdo.padre = self
         if self.tieneHijoDerecho():
             self.hijoDerecho.padre = self
+    
+    def __iter__(self):
+        if self:
+            if self.tieneHijoIzquierdo():
+                    for elem in self.hijoIzquierdo:
+                        yield elem
+            yield self.clave
+            if self.tieneHijoDerecho():
+                    for elem in self.hijoDerecho:
+                        yield elem
 
 
 class ArbolBinarioBusqueda:
