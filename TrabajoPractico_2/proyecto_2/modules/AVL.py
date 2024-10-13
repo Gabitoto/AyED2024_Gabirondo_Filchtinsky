@@ -50,6 +50,9 @@ class NodoArbol:
             if self.tieneHijoDerecho():
                     for elem in self.hijoDerecho:
                         yield elem
+    
+    def imprimir_nodo(self):
+        print(f"Fecha: {self.clave}, Temperatura: {self.valor}")
 
 
 class ArbolBinarioBusqueda:
@@ -276,9 +279,6 @@ class ArbolBinarioBusqueda:
                                     nodoActual.hijoDerecho.cargaUtil,
                                     nodoActual.hijoDerecho.hijoIzquierdo,
                                     nodoActual.hijoDerecho.hijoDerecho)
-    
-    def imprimir_nodo(nodo):
-        print(f"Fecha: {nodo.clave}, Temperatura: {nodo.valor}")
 
     def in_order_generator(self, nodo):
         """Generador que recorre el árbol AVL en in-order."""

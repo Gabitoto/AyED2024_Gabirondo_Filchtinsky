@@ -59,13 +59,17 @@ class Temperaturas_DB:
         """recibe una fecha y elimina del árbol la medición correspondiente a esa fecha."""
         pass
     
-    def devolver_temperaturas(fecha1, fecha2): 
+    def devolver_temperaturas(self, fecha1, fecha2): 
         """devuelve un listado de las mediciones de temperatura en el rango recibido por parámetro con el formato “dd/mm/aaaa: temperatura
         ºC”, ordenado por fechas."""
-        pass
+        lista_temperaturas = []
+        for nodo in self.base_de_datos.iterar_en_orden():
+            if fecha1 <= nodo.clave <= fecha2:
+                lista_temperaturas.append((nodo.clave,nodo.cargaUtil))
+        return lista_temperaturas
     
     def cantidad_muestras(self): 
         """devuelve la cantidad de muestras de la BD."""
-        return self.tamanio
+        return self.tamano
     
     
