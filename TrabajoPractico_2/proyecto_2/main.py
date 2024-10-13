@@ -18,9 +18,12 @@ class Temperaturas_DB:
         temp = self.base_de_datos.obtener(convertir_fecha)
         return temp
     
-    def max_temp_rango(fecha1, fecha2): 
+    def max_temp_rango(self, fecha1, fecha2): 
         """devuelve la temperatura máxima entre los rangos"""
-        pass
+        fecha_min = datetime.strptime(fecha1, "%d/%m/%Y")
+        fecha_max = datetime.strptime(fecha2, "%d/%m/%Y")
+        
+
     
     def fecha1_y_fecha2_inclusive(fecha1,fecha2):
         """Esto no implica que los intervalos del rango deban ser fechas incluidas previamente en el árbol."""
@@ -54,11 +57,11 @@ class Temperaturas_DB:
 base_de_datos =Temperaturas_DB()
 
 
-base_de_datos.guardar_temperatura(20, "1/1/2000")
-base_de_datos.guardar_temperatura(25, "2/1/2000")
-base_de_datos.guardar_temperatura(30, "3/1/2000")
-base_de_datos.guardar_temperatura(35, "4/1/2000")
+base_de_datos.guardar_temperatura(40, "1/1/2000")
+base_de_datos.guardar_temperatura(30, "2/1/2000")
+base_de_datos.guardar_temperatura(20, "3/1/2000")
+#base_de_datos.guardar_temperatura(10, "4/1/2000")
 
 
-Temperatura = base_de_datos.devolver_temperatura("4/1/2000")
-print(Temperatura)
+
+print(base_de_datos.base_de_datos.raiz.hijoDerecho.hijoDerecho.cargaUtil)
