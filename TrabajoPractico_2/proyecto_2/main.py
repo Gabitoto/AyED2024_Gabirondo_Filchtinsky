@@ -12,9 +12,11 @@ class Temperaturas_DB:
         self.base_de_datos._agregar(fecha_dt, temperatura)
         self.tamanio += 1
            
-    def devolver_temperatura(fecha): 
+    def devolver_temperatura(self,fecha): 
         """devuelve la medida de temperatura en la fecha determinada."""
-        pass
+        convertir_fecha = datetime.strptime(fecha,"%d/%m/%Y")
+        temp = self.mediciones.obtener(convertir_fecha)
+        return temp
     
     def max_temp_rango(fecha1, fecha2): 
         """devuelve la temperatura máxima entre los rangos"""
@@ -42,6 +44,6 @@ class Temperaturas_DB:
         ºC”, ordenado por fechas."""
         pass
     
-    def cantidad_muestras(): 
+    def cantidad_muestras(self): 
         """devuelve la cantidad de muestras de la BD."""
-        pass
+        return self.tamanio
