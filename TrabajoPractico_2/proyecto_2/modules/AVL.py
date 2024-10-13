@@ -276,8 +276,18 @@ class ArbolBinarioBusqueda:
                                     nodoActual.hijoDerecho.cargaUtil,
                                     nodoActual.hijoDerecho.hijoIzquierdo,
                                     nodoActual.hijoDerecho.hijoDerecho)
-                 
-                 
-#class iterador:
-#    def __init__(self, arbol, clave_inicio) :
+    
+    def imprimir_nodo(nodo):
+        print(f"Fecha: {nodo.clave}, Temperatura: {nodo.valor}")
+    
+    def in_order_traversal(self, nodo, accion):
+        if nodo is None: # Caso base: si el nodo es None, no hay más que recorrer
+            return
+        self.in_order_traversal(nodo.izquierdo, accion) # Recorrer el subárbol izquierdo
+    
+        accion(nodo) # Procesar el nodo actual con la acción proporcionada
         
+        self.in_order_traversal(nodo.derecho, accion) # Recorrer el subárbol derecho
+    
+    def recorrido_in_order(self, accion):
+        self.in_order_traversal(self.raiz, accion) # Iniciar el recorrido desde la raíz
