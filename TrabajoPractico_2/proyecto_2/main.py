@@ -9,13 +9,13 @@ class Temperaturas_DB:
     def guardar_temperatura(self,temperatura, fecha):
         """guarda la medida de temperatura asociada a la fecha."""
         fecha_dt = datetime.strptime(fecha, "%d/%m/%Y")
-        self.base_de_datos._agregar(fecha_dt, temperatura)
+        self.base_de_datos.agregar(fecha_dt, temperatura)
         self.tamanio += 1
            
     def devolver_temperatura(self,fecha): 
         """devuelve la medida de temperatura en la fecha determinada."""
         convertir_fecha = datetime.strptime(fecha,"%d/%m/%Y")
-        temp = self.mediciones.obtener(convertir_fecha)
+        temp = self.base_de_datos.obtener(convertir_fecha)
         return temp
     
     def max_temp_rango(fecha1, fecha2): 
@@ -47,3 +47,18 @@ class Temperaturas_DB:
     def cantidad_muestras(self): 
         """devuelve la cantidad de muestras de la BD."""
         return self.tamanio
+    
+    
+    
+    
+base_de_datos =Temperaturas_DB()
+
+
+base_de_datos.guardar_temperatura(20, "1/1/2000")
+base_de_datos.guardar_temperatura(25, "2/1/2000")
+base_de_datos.guardar_temperatura(30, "3/1/2000")
+base_de_datos.guardar_temperatura(35, "4/1/2000")
+
+
+Temperatura = base_de_datos.devolver_temperatura("4/1/2000")
+print(Temperatura)
