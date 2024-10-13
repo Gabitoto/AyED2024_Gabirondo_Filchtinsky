@@ -19,16 +19,41 @@ class Temperaturas_DB:
     def max_temp_rango(self, fecha1, fecha2): 
         """devuelve la temperatura máxima entre los rangos, fecha1 y fecha2 inclusive (fecha1,fecha2).
         Esto no implica que los intervalos del rango deban ser fechas incluidas previamente en el árbol."""
-        pass
+        
+        max_temp = -float('inf')  # Inicializamos con un valor bajo para la temperatura máxima
+        for nodo in self.base_de_datos.iterar_en_orden():  # Usamos el generador in-order
+            if fecha1 <= nodo.clave <= fecha2:
+                max_temp = max(max_temp, nodo.cargaUtil)
+        if max_temp == -float('inf'):
+            return None
+        return max_temp
     
     def min_temp_rango(self, fecha1, fecha2): 
         """devuelve la temperatura mínima entre los rangos fecha1 y fecha2 inclusive (fecha1 < fecha2).
         Esto no implica que los intervalos del rango deban ser fechas incluidas previamente en el árbol."""
-        pass
+        
+        min_temp = float('inf')  # Inicializamos con un valor alto para la temperatura minima
+        for nodo in self.base_de_datos.iterar_en_orden():  # Usamos el generador in-order
+            if fecha1 <= nodo.clave <= fecha2:
+                min_temp = min(min_temp, nodo.cargaUtil)
+        if min_temp == float('inf'):
+            return None
+        return min_temp
     
-    def temp_extremos_rango(fecha1, fecha2): 
+    def temp_extremos_rango(self, fecha1, fecha2): 
         """devuelve la temperatura mínima y máxima entre los rangos fecha1 y fecha2 inclusive (fecha1 < fecha2)."""
-        pass
+        
+        max_temp = -float('inf')  # Inicializamos con un valor bajo para la temperatura máxima
+        min_temp = float('inf')  # Inicializamos con un valor alto para la temperatura minima
+        for nodo in self.base_de_datos.iterar_en_orden():  # Usamos el generador in-order
+            if fecha1 <= nodo.clave <= fecha2:
+                min_temp = min(min_temp, nodo.cargaUtil)
+                max_temp = max(max_temp, nodo.cargaUtil)
+        if min_temp == float('inf'):
+            return None
+        if max_temp == -float('inf'):
+            return None
+        return (min_temp, max_temp)
     
     def borrar_temperatura(fecha): 
         """recibe una fecha y elimina del árbol la medición correspondiente a esa fecha."""

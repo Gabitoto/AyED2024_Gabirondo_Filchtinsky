@@ -279,15 +279,17 @@ class ArbolBinarioBusqueda:
     
     def imprimir_nodo(nodo):
         print(f"Fecha: {nodo.clave}, Temperatura: {nodo.valor}")
+
+    def in_order_generator(self, nodo):
+        """Generador que recorre el árbol AVL en in-order."""
+        if nodo is not None:
+            # Recorrer el subárbol izquierdo
+            yield from self.in_order_generator(nodo.hijoIzquierdo)
+            # Devolver el nodo actual
+            yield nodo
+            # Recorrer el subárbol derecho
+            yield from self.in_order_generator(nodo.hijoDerecho)
     
-    def in_order_traversal(self, nodo, accion):
-        if nodo is None: # Caso base: si el nodo es None, no hay más que recorrer
-            return
-        self.in_order_traversal(nodo.izquierdo, accion) # Recorrer el subárbol izquierdo
-    
-        accion(nodo) # Procesar el nodo actual con la acción proporcionada
-        
-        self.in_order_traversal(nodo.derecho, accion) # Recorrer el subárbol derecho
-    
-    def recorrido_in_order(self, accion):
-        self.in_order_traversal(self.raiz, accion) # Iniciar el recorrido desde la raíz
+    def iterar_en_orden(self):
+        """Inicia la iteración sobre el árbol AVL desde la raíz."""
+        return self.in_order_generator(self.raiz)
