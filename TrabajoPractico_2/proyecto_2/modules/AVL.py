@@ -8,7 +8,7 @@ class NodoArbol:
         self.__factorEquilibrio = 0
 
     @property
-    def get_clave(self):
+    def clave(self):
         return self.__clave
     
     @clave.setter
@@ -16,11 +16,11 @@ class NodoArbol:
         self.__clave = clave
         
     @property
-    def get_valor(self):
+    def valor(self):
         return self.__cargaUtil
     
-    @cargaUtil.setter
-    def cargaUtil(self,valor):
+    @valor.setter
+    def valor(self,valor):
         self.__cargaUtil = valor
         
     def tieneHijoIzquierdo(self):
@@ -208,7 +208,7 @@ class ArbolBinarioBusqueda:
        if self.raiz:
            res = self._obtener(clave,self.raiz)
            if res:
-                  return res.cargaUtil
+                  return res.valor
            else:
                   return None
        else:

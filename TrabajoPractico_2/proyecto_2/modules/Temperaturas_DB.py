@@ -23,7 +23,7 @@ class Temperaturas_DB:
         max_temp = -float('inf')  # Inicializamos con un valor bajo para la temperatura máxima
         for nodo in self.base_de_datos.iterar_en_orden():  # Usamos el generador in-order
             if fecha1 <= nodo.clave <= fecha2:
-                max_temp = max(max_temp, nodo.cargaUtil)
+                max_temp = max(max_temp, nodo.valor)
         if max_temp == -float('inf'):
             return None
         return max_temp
@@ -35,7 +35,7 @@ class Temperaturas_DB:
         min_temp = float('inf')  # Inicializamos con un valor alto para la temperatura minima
         for nodo in self.base_de_datos.iterar_en_orden():  # Usamos el generador in-order
             if fecha1 <= nodo.clave <= fecha2:
-                min_temp = min(min_temp, nodo.cargaUtil)
+                min_temp = min(min_temp, nodo.valor)
         if min_temp == float('inf'):
             return None
         return min_temp
@@ -47,8 +47,8 @@ class Temperaturas_DB:
         min_temp = float('inf')  # Inicializamos con un valor alto para la temperatura minima
         for nodo in self.base_de_datos.iterar_en_orden():  # Usamos el generador in-order
             if fecha1 <= nodo.clave <= fecha2:
-                min_temp = min(min_temp, nodo.cargaUtil)
-                max_temp = max(max_temp, nodo.cargaUtil)
+                min_temp = min(min_temp, nodo.valor)
+                max_temp = max(max_temp, nodo.valor)
         if min_temp == float('inf'):
             return None
         if max_temp == -float('inf'):
@@ -65,7 +65,7 @@ class Temperaturas_DB:
         lista_temperaturas = []
         for nodo in self.base_de_datos.iterar_en_orden():
             if fecha1 <= nodo.clave <= fecha2:
-                lista_temperaturas.append((nodo.clave,nodo.cargaUtil))
+                lista_temperaturas.append((nodo.clave,nodo.valor))
         return lista_temperaturas
     
     def cantidad_muestras(self): 
