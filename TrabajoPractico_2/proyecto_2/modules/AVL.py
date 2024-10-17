@@ -1,18 +1,66 @@
 class NodoArbol:
     def __init__(self,clave,valor,izquierdo=None,derecho=None,padre=None):
-        self.clave = clave
-        self.cargaUtil = valor
-        self.hijoIzquierdo = izquierdo
-        self.hijoDerecho = derecho
-        self.padre = padre
-        self.factorEquilibrio = 0
+        self.__clave = clave
+        self.__cargaUtil = valor
+        self.__hijoIzquierdo = izquierdo
+        self.__hijoDerecho = derecho
+        self.__padre = padre
+        self.__factorEquilibrio = 0
 
+    @property
+    def get_clave(self):
+        return self.__clave
+    
+    @clave.setter
+    def clave(self, clave):
+        self.__clave = clave
+        
+    @property
+    def get_valor(self):
+        return self.__cargaUtil
+    
+    @cargaUtil.setter
+    def cargaUtil(self,valor):
+        self.__cargaUtil = valor
+        
     def tieneHijoIzquierdo(self):
-        return self.hijoIzquierdo
-
+        return self.__hijoIzquierdo
+    
+    @property
+    def hijoIzquierdo(self):
+        return self.__hijoIzquierdo
+    
+    @hijoIzquierdo.setter
+    def hijoIzquierdo(self,izquierdo):
+        self.__hijoIzquierdo = izquierdo
+        
     def tieneHijoDerecho(self):
-        return self.hijoDerecho
-
+        return self.__hijoDerecho
+    
+    @property
+    def hijoDerecho(self):
+        return self.__hijoDerecho
+    
+    @hijoDerecho.setter
+    def hijoDerecho(self,derecho):
+        self.__hijoDerecho = derecho
+    
+    @property
+    def padre(self):
+        return self.__padre
+    
+    @padre.setter
+    def padre(self,padre):
+        self.__padre = padre
+    
+    @property
+    def factorEquilibrio(self):
+        return self.__factorEquilibrio
+    
+    @factorEquilibrio.setter
+    def factorEquilibrio(self,int):
+        self.__factorEquilibrio + int
+    
     def esHijoIzquierdo(self):
         return self.padre and self.padre.hijoIzquierdo == self
 
