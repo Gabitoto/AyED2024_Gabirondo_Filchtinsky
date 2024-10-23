@@ -206,26 +206,3 @@ class ListaDobleEnlazada:
         while nodo_actual is not None:
             yield nodo_actual.dato
             nodo_actual = nodo_actual.siguiente
-    
-
-#------------------------------- Llamado a la LDE para probar sus funciones -------------------------------#
-
-dll = ListaDobleEnlazada()
-print(dll.esta_vacia())
-dll.agregar_al_inicio(10)
-dll.agregar_al_inicio(20)
-dll.agregar_al_inicio(30)
-dll.agregar_al_final(40)
-print(dll.esta_vacia())
-dll2 = dll.copiar()
-print(len(dll2))
-print(len(dll))
-dll2.concatenar(dll)
-print(len(dll2))
-dll.mostrar()
-print()
-dll2.mostrar()
-ob = dll + dll2
-print(len(ob))
-dll.limpiar()
-print(dll.esta_vacia())
