@@ -58,8 +58,14 @@ class NodoArbol:
         return self.__factorEquilibrio
     
     @factorEquilibrio.setter
-    def factorEquilibrio(self,int):
-        self.__factorEquilibrio + int
+    def factorEquilibrio(self, valor):
+        self.__factorEquilibrio = valor  # Asigna el valor directamente 
+
+    def sumar_factor(self, valor): # Método para sumar al factor de equilibrio
+        self.__factorEquilibrio += valor
+
+    def restar_factor(self, valor): # Método para restar al factor de equilibrio
+        self.__factorEquilibrio -= valor
     
     def esHijoIzquierdo(self):
         return self.padre and self.padre.hijoIzquierdo == self
@@ -142,9 +148,9 @@ class ArbolBinarioBusqueda:
             return
         if nodo.padre != None:
             if nodo.esHijoIzquierdo():
-                nodo.padre.factorEquilibrio += 1
+                nodo.padre.sumar_factor(1)
             elif nodo.esHijoDerecho():
-                nodo.padre.factorEquilibrio -= 1
+                nodo.padre.restar_factor(1)
 
             if nodo.padre.factorEquilibrio != 0:
                 self.actualizarEquilibrio(nodo.padre)
