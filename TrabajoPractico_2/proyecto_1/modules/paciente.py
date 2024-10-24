@@ -36,6 +36,11 @@ class Paciente:
             cad += str(self.riesgo) + '-' + self.__descripcion
             return cad
         
+        def __gt__(self,paciente):
+            return self.riesgo > paciente.get_riesgo()
         
-        
+if __name__ == "__main__":
+    pac1 = Paciente()
+    pac2 = Paciente()
+    print(pac1>pac2)  
         
