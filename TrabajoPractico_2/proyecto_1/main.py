@@ -7,7 +7,7 @@ import time
 import datetime
 import modules.paciente as pac
 import random
-import modules.Cola_Prioridad_MB as cp
+import modules.monticulo_binario as cp
 
 n = 20  # cantidad de ciclos de simulación
 
