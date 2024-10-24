@@ -5,7 +5,7 @@ class monticuloBinario:
     
     def infiltArriba(self, i):
         while i // 2 > 0:  
-            if self.listaMonticulo[i].riesgo < self.listaMonticulo[i // 2].riesgo:
+            if self.listaMonticulo[i] < self.listaMonticulo[i // 2]:
                 tmp = self.listaMonticulo[i // 2]
                 self.listaMonticulo[i // 2] = self.listaMonticulo[i]
                 self.listaMonticulo[i] = tmp
@@ -19,7 +19,7 @@ class monticuloBinario:
     def infiltAbajo(self,i):
         while (i * 2) <= self.tamanoActual:
             hm = self.hijoMin(i)
-            if self.listaMonticulo[i].riesgo > self.listaMonticulo[hm].riesgo:
+            if self.listaMonticulo[i] > self.listaMonticulo[hm]:
                 tmp = self.listaMonticulo[i]
                 self.listaMonticulo[i] = self.listaMonticulo[hm]
                 self.listaMonticulo[hm] = tmp
@@ -29,7 +29,7 @@ class monticuloBinario:
         if i * 2 + 1 > self.tamanoActual:
             return i * 2
         else:
-            if self.listaMonticulo[i*2].riesgo < self.listaMonticulo[i*2+1].riesgo:
+            if self.listaMonticulo[i*2] < self.listaMonticulo[i*2+1]:
                 return i * 2
             else:   
                 return i * 2 + 1

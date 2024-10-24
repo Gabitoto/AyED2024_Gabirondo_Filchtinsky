@@ -7,11 +7,11 @@ import time
 import datetime
 import modules.paciente as pac
 import random
-import modules.monticulo_binario as cp
+import modules.cola_prioridad as cp
 
 n = 20  # cantidad de ciclos de simulación
 
-cola_de_espera = cp.cola_Prioridad()
+cola_de_espera = cp.colaPrioridad()
 
 # Ciclo que gestiona la simulación
 for i in range(n):
@@ -31,7 +31,7 @@ for i in range(n):
     # Atención de paciente en este ciclo: en el 50% de los casos
     if random.random() < 0.50:
         # se atiende paciente que se encuentra al frente de la cola
-        paciente_atendido = cola_de_espera.eliminarMin()
+        paciente_atendido = cola_de_espera.extraer_mayor_prioridad()
         print('*'*40)
         print('Se atiende el paciente:', paciente_atendido)
         print('*'*40)
@@ -42,8 +42,9 @@ for i in range(n):
     print()
 
     # Se muestran los pacientes restantes en la cola de espera
-    print('Pacientes que faltan atenderse:', cola_de_espera.tamanoActual)
-    for paciente in cola_de_espera.listaMonticulo[1:]:
+    print('Pacientes que faltan atenderse:', cola_de_espera.tamanio())
+    lista_cola = cola_de_espera.lista_de_prioridad()
+    for paciente in lista_cola[1:]:
         print('\t', paciente)
     
     print()

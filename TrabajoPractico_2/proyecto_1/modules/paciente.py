@@ -23,10 +23,10 @@ class Paciente:
 
         def get_apellido(self):
             return self.__apellido
-
+        
         def get_riesgo(self):
             return self.riesgo
-
+        
         def get_descripcion_riesgo(self):
             return self.__descripcion
 
