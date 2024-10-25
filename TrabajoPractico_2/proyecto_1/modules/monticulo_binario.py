@@ -43,5 +43,8 @@ class monticuloBinario:
         self.tamanoActual -= 1
         self.infiltAbajo(1)
         return valorSacado
-
+    
+    def __iter__(self):
+        for i in self.listaMonticulo:
+            yield i
 

@@ -11,21 +11,19 @@ descripciones_de_riesgo = ['crítico', 'moderado', 'bajo']
 probabilidades = [0.1, 0.3, 0.6] 
 
 class Paciente:
-        def __init__(self):
+        def __init__(self,orden):
             n = len(nombres)
             self.__nombre = nombres[randint(0, n-1)]
             self.__apellido = apellidos[randint(0, n-1)]
             self.riesgo = choices(niveles_de_riesgo, probabilidades)[0]
             self.__descripcion = descripciones_de_riesgo[self.riesgo-1]
+            self.orden = orden # Se le agrega el tiempo en el que ingresan
 
         def get_nombre(self):
             return self.__nombre
 
         def get_apellido(self):
             return self.__apellido
-        
-        def get_riesgo(self):
-            return self.riesgo
         
         def get_descripcion_riesgo(self):
             return self.__descripcion
@@ -36,11 +34,13 @@ class Paciente:
             cad += str(self.riesgo) + '-' + self.__descripcion
             return cad
         
-        def __gt__(self,paciente):
-            return self.riesgo > paciente.get_riesgo()
+        def __lt__(self,pac):
+            if self.riesgo == pac.riesgo:
+                return self.orden < pac.orden
+            return self.riesgo < pac.riesgo
         
-if __name__ == "__main__":
-    pac1 = Paciente()
-    pac2 = Paciente()
-    print(pac1>pac2)  
+        def __gt__(self,pac):
+            if self.riesgo == pac.riesgo:
+                return self.orden > pac.orden
+            return self.riesgo > pac.riesgo
         
