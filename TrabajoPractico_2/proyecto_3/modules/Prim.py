@@ -1,20 +1,21 @@
 from modules.cola_prioridad import colaPrioridad
+from modules.Vertice import Vertice as v
 import sys
 
 def prim(G, inicio):
     cp = colaPrioridad()
 
     for v in G:
-        v.asignarDistancia(sys.maxsize)
-        v.asignarPredecesor(None)
-    inicio.asignarDistancia(0)
-    cp.construirMonticulo([(v.obtenerDistancia(),v) for v in G])
+        v.asignar_distancia(sys.maxsize)
+        v.asignar_predecesor(None)
+    inicio.asignar_distancia(0)
+    cp.insertar([(v.obtener_distancia(),v) for v in G])
 
     while not cp.estaVacia():
-        verticeActual = cp.eliminarMin()
-        for verticeSiguiente in verticeActual.obtenerConexiones():
-          nuevoCosto = verticeActual.obtenerPonderacion(verticeSiguiente)
-          if verticeSiguiente in cp and nuevoCosto < verticeSiguiente.obtenerDistancia():
-            verticeSiguiente.asignarPredecesor(verticeActual)
-            verticeSiguiente.asignarDistancia(nuevoCosto)
+        verticeActual = cp.extraer_mayor_prioridad()
+        for verticeSiguiente in verticeActual.obtener_conexiones():
+          nuevoCosto = verticeActual.obtener_ponderacion(verticeSiguiente)
+          if verticeSiguiente in cp and nuevoCosto < verticeSiguiente.obtener_distancia():
+            verticeSiguiente.asignar_predecesor(verticeActual)
+            verticeSiguiente.asignar_distancia(nuevoCosto)
             cp.decrementarClave(verticeSiguiente,nuevoCosto)

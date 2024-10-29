@@ -1,6 +1,6 @@
 class monticuloBinario:
     def __init__(self):
-        self.listaMonticulo = [0]
+        self.listaMonticulo = [(0,0)]
         self.tamanoActual = 0
     
     def infiltArriba(self, i):
@@ -48,3 +48,19 @@ class monticuloBinario:
         for i in self.listaMonticulo:
             yield i
 
+    def construir_monticulo(self,una_lista):
+        i = len(una_lista) // 2
+        self.tamano_actual = len(una_lista)
+        self.lista_monticulo = [0] + una_lista[:]
+        while (i > 0):
+            self.infiltAbajo(i)
+            i = i - 1
+    
+    def esta_vacia(self):
+        if self.lista_monticulo == [(0,0)]:
+            return True
+        else:
+            return False
+        
+    def __lt__(self, otro):
+        return True
