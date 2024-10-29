@@ -16,10 +16,14 @@ class colaPrioridad:
     def tamanio(self):
         return self.cola_prioridad.tamanoActual
     
-    def decrementarClave(self,vertice,nueva_distancia):
-        # se busca el vertice en la cola de prioridad y actualiza su distancia
-        for i, (distancia,v) in enumerate(self.cola_prioridad.listaMonticulo):
-            if v == vertice:
-                self.cola_prioridad.listaMonticulo[i] = (nueva_distancia,vertice) # actualiza la distancia
+    def contiene(self, vertice):
+        return any(v == vertice for _, v in self.cola_prioridad.listaMonticulo)
+    
+    def decrementar_clave(self, vertice, nueva_distancia):
+        # Busca el vértice en el montículo y actualiza su distancia
+        for i in range(1, self.cola_prioridad.tamanoActual + 1):
+            if self.cola_prioridad.listaMonticulo[i][1] == vertice:
+                # Actualiza la distancia y restablece el orden del montículo
+                self.cola_prioridad.listaMonticulo[i] = (nueva_distancia, vertice)
+                self.cola_prioridad.infiltArriba(i)
                 break
-        self.cola_prioridad.listaMonticulo.sort(key=lambda x: x[0]) # ordena por distancia

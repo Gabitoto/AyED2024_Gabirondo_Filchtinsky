@@ -1,4 +1,4 @@
-from Vertice import Vertice
+from modules.Vertice import Vertice
     
 class Grafo:
   

@@ -15,7 +15,7 @@ def prim(G, inicio):
         verticeActual = cp.extraer_mayor_prioridad()
         for verticeSiguiente in verticeActual.obtener_conexiones():
           nuevoCosto = verticeActual.obtener_ponderacion(verticeSiguiente)
-          if verticeSiguiente in cp and nuevoCosto < verticeSiguiente.obtener_distancia():
+          if cp.contiene(verticeSiguiente) and nuevoCosto < verticeSiguiente.obtener_distancia():
             verticeSiguiente.asignar_predecesor(verticeActual)
             verticeSiguiente.asignar_distancia(nuevoCosto)
-            cp.decrementarClave(verticeSiguiente,nuevoCosto)
+            cp.decrementar_clave(verticeSiguiente,nuevoCosto)

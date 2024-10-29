@@ -33,3 +33,6 @@ class Vertice:
         
     def __lt__(self, otro):
         return self.dist < otro.dist
+    
+    def __eq__(self, otro):
+        return self.id == otro.id
