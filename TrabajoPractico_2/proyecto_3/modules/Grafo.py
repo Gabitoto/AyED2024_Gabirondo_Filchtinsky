@@ -32,7 +32,15 @@ class Grafo:
         self.lista_vertices[de].agregar_vecino(self.lista_vertices[a],ponderacion)
 
     def obtener_vertices(self):
-        return self.lista_vertices.keys()
+        return self.lista_vertices.values()
 
     def __iter__(self):
         return iter(self.lista_vertices.values())
+    
+    def mostrar_grafo(self):
+        for vertice in self.lista_vertices.values():
+            conexiones = ", ".join(f"{clave} (peso {peso})" for clave, peso in vertice.conectado_a.items())
+            print(f"Aldea {vertice.id} está conectada a: {conexiones}")
+    
+    
+    

@@ -50,14 +50,14 @@ class monticuloBinario:
 
     def construir_monticulo(self,una_lista):
         i = len(una_lista) // 2
-        self.tamano_actual = len(una_lista)
-        self.lista_monticulo = [0] + una_lista[:]
+        self.tamanoActual = len(una_lista)
+        self.listaMonticulo = [0] + una_lista[:]
         while (i > 0):
             self.infiltAbajo(i)
             i = i - 1
     
     def esta_vacia(self):
-        if self.lista_monticulo == [(0,0)]:
+        if self.listaMonticulo == [(0,0)]:
             return True
         else:
             return False

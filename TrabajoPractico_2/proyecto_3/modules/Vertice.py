@@ -13,7 +13,7 @@ class Vertice:
         return self.dist
     
     def agregar_vecino(self,vecino,ponderacion):      
-        self.conectado_a[vecino] = ponderacion
+        self.conectado_a[vecino.id] = ponderacion
 
     def __str__(self):
         return str(self.id) + ' conectado_a: ' + str([x.id for x in self.conectado_a]) + str([self.obtener_ponderacion(v) for v in self.conectado_a])
@@ -25,8 +25,8 @@ class Vertice:
     def obtener_id(self):
         return self.id
 
-    def obtener_ponderacion(self,vecino):
-        return self.conectado_a[vecino]
+    def obtener_ponderacion(self,vecino_id):
+        return self.conectado_a.get(vecino_id)
     
     def asignar_predecesor(self, predecesor):
         self.predecesor = predecesor
