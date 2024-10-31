@@ -1,83 +1,96 @@
 class monticuloBinario:
     def __init__(self):
-        self.listaMonticulo = [(0,0)]
-        self.tamanoActual = 0
-    
-    def construir_monticulo(self,una_lista):
-        i = len(una_lista) // 2
-        self.tamanoActual = len(una_lista)
-        self.listaMonticulo = [0] + una_lista[:]
-        while (i > 0):
-            self.infiltAbajo(i)
-            i = i - 1
-    
-    def infiltArriba(self, i):
-        while i // 2 > 0:  
-            if self.listaMonticulo[i] < self.listaMonticulo[i // 2]:
-                tmp = self.listaMonticulo[i // 2]
-                self.listaMonticulo[i // 2] = self.listaMonticulo[i]
-                self.listaMonticulo[i] = tmp
-            else:
-                break
-            i = i // 2  
-             
-    def insertar(self,k):
-        self.listaMonticulo.append(k)
-        self.tamanoActual = self.tamanoActual + 1
-        self.infiltArriba(self.tamanoActual)
-        
-    def infiltAbajo(self,i):
-        while (i * 2) <= self.tamanoActual:
-            hm = self.hijoMin(i)
-            if self.listaMonticulo[i] > self.listaMonticulo[hm]:
-                tmp = self.listaMonticulo[i]
-                self.listaMonticulo[i] = self.listaMonticulo[hm]
-                self.listaMonticulo[hm] = tmp
+        self.lista_monticulo = [(0, None)]  # Elemento dummy en índice 0
+        self.tamano_actual = 0
+        self.posiciones = {}  # Diccionario para rastrear posiciones de vértices
+
+    def infiltrar_arriba(self, i):
+        while i // 2 > 0:
+            if self.lista_monticulo[i][0] < self.lista_monticulo[i // 2][0]:
+                # Actualizar posiciones antes del intercambio
+                self.actualizar_posicion(self.lista_monticulo[i][1], i // 2)
+                self.actualizar_posicion(self.lista_monticulo[i // 2][1], i)
+                # Realizar el intercambio
+                self.lista_monticulo[i], self.lista_monticulo[i // 2] = \
+                    self.lista_monticulo[i // 2], self.lista_monticulo[i]
+            i = i // 2
+
+    def infiltrar_abajo(self, i):
+        while (i * 2) <= self.tamano_actual:
+            hm = self.hijo_min(i)
+            if self.lista_monticulo[i][0] > self.lista_monticulo[hm][0]:
+                # Actualizar posiciones antes del intercambio
+                self.actualizar_posicion(self.lista_monticulo[i][1], hm)
+                self.actualizar_posicion(self.lista_monticulo[hm][1], i)
+                # Realizar el intercambio
+                self.lista_monticulo[i], self.lista_monticulo[hm] = \
+                    self.lista_monticulo[hm], self.lista_monticulo[i]
             i = hm
-            
-    def hijoMin(self,i):
-        if i * 2 + 1 > self.tamanoActual:
+
+    def insertar(self, k):
+        self.lista_monticulo.append(k)
+        self.tamano_actual += 1
+        self.actualizar_posicion(k[1], self.tamano_actual)
+        self.infiltrar_arriba(self.tamano_actual)
+
+    def hijo_min(self, i):
+        if i * 2 + 1 > self.tamano_actual:
             return i * 2
         else:
-            if self.listaMonticulo[i*2] < self.listaMonticulo[i*2+1]:
+            if self.lista_monticulo[i * 2][0] < self.lista_monticulo[i * 2 + 1][0]:
                 return i * 2
-            else:   
+            else:
                 return i * 2 + 1
-    
+
     def eliminarMin(self):
-        if self.tamanoActual == 0:
+        if len(self.lista_monticulo) <= 1:
             return None
-        valorSacado = self.listaMonticulo[1][1]
-        self.listaMonticulo[1] = self.listaMonticulo[self.tamanoActual]
-        self.tamanoActual -= 1  
-        self.listaMonticulo.pop() # Elimina el último elemento
-        self.infiltAbajo(1)
-        return valorSacado
-    
-    def __iter__(self):
-        for i in self.listaMonticulo:
-            yield i
-    
-    def esta_vacia(self):
-        if self.tamanoActual == 0:
-            return True
-        else:
-            return False
         
-    def __lt__(self, otro):
-        return True
-    
-    def __str__(self):
-        return str(self.listaMonticulo)
-    
-    def __len__(self):
-        return self.tamanoActual
-    
-    def decrementar_clave(self, vertice, nueva_distancia):
-        # Busca el vértice en el montículo y actualiza su distancia
-        for i in range(1, self.tamanoActual + 1):
-            if self.listaMonticulo[i][1] == vertice:
-                # Actualiza la distancia y restablece el orden del montículo
-                self.listaMonticulo[i] = (nueva_distancia, vertice)
-                self.infiltArriba(i)
-                break
+        valor_raiz = self.lista_monticulo[1][1]  # Obtener el vértice (no la tupla completa)
+        self.actualizar_posicion(self.lista_monticulo[self.tamano_actual][1], 1)
+        self.lista_monticulo[1] = self.lista_monticulo[self.tamano_actual]
+        self.tamano_actual -= 1
+        self.lista_monticulo.pop()
+        if self.tamano_actual > 0:
+            self.infiltrar_abajo(1)
+        
+        # Eliminar la posición del vértice eliminado
+        if valor_raiz in self.posiciones:
+            del self.posiciones[valor_raiz]
+            
+        return valor_raiz
+
+    def construir_monticulo(self, lista_vert):
+        self.tamano_actual = len(lista_vert)
+        self.lista_monticulo = [(0, None)] + lista_vert[:]
+        # Inicializar las posiciones
+        for i in range(1, len(self.lista_monticulo)):
+            self.actualizar_posicion(self.lista_monticulo[i][1], i)
+        i = len(lista_vert) // 2
+        while i > 0:
+            self.infiltrar_abajo(i)
+            i = i - 1
+
+    def esta_vacia(self):
+        return self.tamano_actual == 0
+
+    def decrementar_clave(self, vertice, nueva_dist):
+        # Encontrar la posición del vértice
+        if vertice not in self.posiciones:
+            return
+        
+        pos = self.posiciones[vertice]
+        if pos > self.tamano_actual:
+            return
+            
+        # Actualizar la distancia
+        self.lista_monticulo[pos] = (nueva_dist, vertice)
+        self.infiltrar_arriba(pos)
+
+    def actualizar_posicion(self, vertice, pos):
+        """Actualiza la posición de un vértice en el montículo"""
+        if vertice is not None:
+            self.posiciones[vertice] = pos
+
+    def __contains__(self, vertice):
+        return vertice in self.posiciones
