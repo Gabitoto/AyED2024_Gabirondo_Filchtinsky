@@ -3,14 +3,13 @@ class monticuloBinario:
         self.listaMonticulo = [(0,0)]
         self.tamanoActual = 0
     
-    def construirMonticulo(self, listaClaves):
-        try:
-            if type(listaClaves) != list:
-                raise TypeError()
-            for x in listaClaves:
-                self.insertar(x)
-        except(TypeError):
-            print('listaClaves debe ser una lista')
+    def construir_monticulo(self,una_lista):
+        i = len(una_lista) // 2
+        self.tamanoActual = len(una_lista)
+        self.listaMonticulo = [0] + una_lista[:]
+        while (i > 0):
+            self.infiltAbajo(i)
+            i = i - 1
     
     def infiltArriba(self, i):
         while i // 2 > 0:  
@@ -67,6 +66,12 @@ class monticuloBinario:
         
     def __lt__(self, otro):
         return True
+    
+    def __str__(self):
+        return str(self.listaMonticulo)
+    
+    def __len__(self):
+        return self.tamanoActual
     
     def decrementar_clave(self, vertice, nueva_distancia):
         # Busca el vértice en el montículo y actualiza su distancia
