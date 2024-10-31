@@ -1,9 +1,8 @@
-from modules.cola_prioridad import colaPrioridad
-from modules.Vertice import Vertice as v
+from modules.min_heap import monticuloBinario
 import sys
 
 def prim(G, inicio):
-    cp = colaPrioridad()
+    cp = monticuloBinario()
 
     for v in G:
         v.asignar_distancia(sys.maxsize)
@@ -11,8 +10,8 @@ def prim(G, inicio):
     inicio.asignar_distancia(0)
     cp.insertar([(v.obtener_distancia(),v) for v in G])
 
-    while not cp.cola_prioridad.esta_vacia():
-        verticeActual = cp.extraer_mayor_prioridad()
+    while not cp.esta_vacia():
+        verticeActual = cp.eliminarMin()
         for verticeSiguiente in verticeActual.obtener_conexiones():
           nuevoCosto = verticeActual.obtener_ponderacion(verticeSiguiente)
           if verticeSiguiente in cp and nuevoCosto < verticeSiguiente.obtener_distancia():

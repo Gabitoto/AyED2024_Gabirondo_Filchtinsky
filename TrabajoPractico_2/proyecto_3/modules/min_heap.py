@@ -59,9 +59,9 @@ class monticuloBinario:
     
     def decrementar_clave(self, vertice, nueva_distancia):
         # Busca el vértice en el montículo y actualiza su distancia
-        for i in range(1, self.cola_prioridad.tamanoActual + 1):
-            if self.cola_prioridad.listaMonticulo[i][1] == vertice:
+        for i in range(1, self.tamanoActual + 1):
+            if self.listaMonticulo[i][1] == vertice:
                 # Actualiza la distancia y restablece el orden del montículo
-                self.cola_prioridad.listaMonticulo[i] = (nueva_distancia, vertice)
-                self.cola_prioridad.infiltArriba(i)
+                self.listaMonticulo[i] = (nueva_distancia, vertice)
+                self.infiltArriba(i)
                 break

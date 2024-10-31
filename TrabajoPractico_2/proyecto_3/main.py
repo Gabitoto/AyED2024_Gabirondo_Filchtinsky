@@ -2,6 +2,15 @@ from modules.Grafo import Grafo
 from modules.Prim import prim as p
 
 def main():
+    lista_aldeas = set()
+    with open("aldeas.txt", "r") as aldeas:
+        for linea in aldeas:
+            partes = linea.strip().split(", ")
+            aldea1 = partes[0]
+            # Agregar ambas aldeas al conjunto
+            lista_aldeas.add(aldea1)
+    aldeas.close()
+        
     with open("aldeas.txt", "r") as archivo:
         grafo = Grafo()
         for linea in archivo:
@@ -25,14 +34,20 @@ def main():
     
     grafo.mostrar_grafo()
 
-    """# Ejecutar Prim para encontrar el árbol de expansión mínima
-    p(grafo, aldea_inicio)
+    # Ejecutar Prim para encontrar el árbol de expansión mínima
+    #p(grafo, aldea_inicio)
 
     # Mostrar los resultados
-    print("Árbol de expansión mínima desde la aldea 'Peligros':")
+    """print("Árbol de expansión mínima desde la aldea 'Peligros':")
     for vertice in grafo:
         if vertice.obtener_predecesor() is not None:
-            print(f"{vertice.obtener_predecesor().obtener_id()} -> {vertice.obtener_id()} (Peso: {vertice.obtener_ponderacion(vertice.obtener_predecesor()):d})")"""
+            print(f"{vertice.obtener_predecesor().obtener_id()} -> {vertice.obtener_id()} (Peso: {vertice.obtener_ponderacion(vertice.obtener_predecesor()):d})")
+"""
 
+    # Mostrar la lista de aldeas en orden alfabético
+    aldeas_ordenadas = sorted(lista_aldeas)
+    for aldea in aldeas_ordenadas:
+        print(aldea)
+        
 if __name__ == "__main__":
     main()

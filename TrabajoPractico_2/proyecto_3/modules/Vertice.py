@@ -36,3 +36,7 @@ class Vertice:
     
     def __eq__(self, otro):
         return self.id == otro.id
+    
+    def obtener_predecesor(self):
+        """Devuelve el predecesor del vértice actual."""
+        return self.predecesor

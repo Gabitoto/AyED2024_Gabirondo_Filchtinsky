@@ -27,3 +27,5 @@ class colaPrioridad:
                 self.cola_prioridad.listaMonticulo[i] = (nueva_distancia, vertice)
                 self.cola_prioridad.infiltArriba(i)
                 break
+    
+    
