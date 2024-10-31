@@ -4,7 +4,7 @@ from modules.Prim import prim as p
 def main():
     # Lee las aldeas del archivo
     lista_aldeas = set()
-    with open("aldeas.txt", "r", encoding="UTF-8") as aldeas:
+    with open("TrabajoPractico_2/proyecto_3/data/aldeas.txt", "r", encoding="UTF-8") as aldeas:
         for linea in aldeas:
             partes = linea.strip().split(", ")
             aldea1 = partes[0]
@@ -12,7 +12,7 @@ def main():
     
     # Crea el grafo
     grafo = Grafo()
-    with open("aldeas.txt", "r", encoding="UTF-8") as archivo:
+    with open("TrabajoPractico_2/proyecto_3/data/aldeas.txt", "r", encoding="UTF-8") as archivo:
         for linea in archivo:
             partes = linea.strip().split(", ")
             if len(partes) == 3:
@@ -33,34 +33,23 @@ def main():
         return
     
     # Ejecuta Prim para encontrar el árbol de expansión mínima
-    arbol_expansion = p(grafo, aldea_inicio)
+    flujo_mensajes, aldeas_recorridas = p(grafo, aldea_inicio)
     
-    # Mostrar los resultados
-    print("\nLista de aldeas en orden alfabético:")
-    for aldea in sorted(lista_aldeas):
+    # Calcular distancia total
+    distancia_total = sum(mensaje['distancia'] for mensaje in flujo_mensajes)
+    
+    # Mostrar el flujo de mensajes con numeración
+    print("\nFlujo de mensajes:")
+    for i, mensaje in enumerate(flujo_mensajes, 1):
+        print(f"{i}. {mensaje['emisor']} a {mensaje['receptor']} (distancia: {mensaje['distancia']})")
+    
+    # Mostrar aldeas en orden alfabético
+    print("\nAldeas recorridas (orden alfabético):")
+    for aldea in sorted(aldeas_recorridas):
         print(aldea)
     
-    print("\nResultados del envío de noticias:")
-    total_distancia = 0
-    
-    # Para cada vértice en el grafo
-    for vertice in grafo:
-        predecesor = vertice.obtener_predecesor()
-        if predecesor is not None:
-            # Obtener la distancia entre el vértice y su predecesor
-            distancia = vertice.obtener_ponderacion(predecesor)
-            total_distancia += distancia
-            
-            # Encontrar los vecinos que tienen a este vértice como predecesor
-            vecinos = [v.obtener_id() for v in grafo if v.obtener_predecesor() == vertice]
-            
-            print(f"{vertice.obtener_id()} recibe la noticia de {predecesor.obtener_id()} (distancia: {distancia})")
-            if vecinos:
-                print(f"   Enviará noticias a: {', '.join(vecinos)}")
-            else:
-                print("   No enviará noticias a ninguna aldea")
-    
-    print(f"\nTotal de distancia recorrida por todas las palomas: {total_distancia}")
+    # Mostrar distancia total
+    print(f"\nDistancia total recorrida: {distancia_total}")
 
 if __name__ == "__main__":
     main()
