@@ -8,7 +8,7 @@ def prim(G, inicio):
         v.asignar_distancia(sys.maxsize)
         v.asignar_predecesor(None)
     inicio.asignar_distancia(0)
-    cp.insertar([(v.obtener_distancia(),v) for v in G])
+    cp.construirMonticulo([(v.obtener_distancia(),v) for v in G])
 
     while not cp.esta_vacia():
         verticeActual = cp.eliminarMin()

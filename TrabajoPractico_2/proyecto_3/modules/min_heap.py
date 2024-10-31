@@ -3,12 +3,23 @@ class monticuloBinario:
         self.listaMonticulo = [(0,0)]
         self.tamanoActual = 0
     
+    def construirMonticulo(self, listaClaves):
+        try:
+            if type(listaClaves) != list:
+                raise TypeError()
+            for x in listaClaves:
+                self.insertar(x)
+        except(TypeError):
+            print('listaClaves debe ser una lista')
+    
     def infiltArriba(self, i):
         while i // 2 > 0:  
             if self.listaMonticulo[i] < self.listaMonticulo[i // 2]:
                 tmp = self.listaMonticulo[i // 2]
                 self.listaMonticulo[i // 2] = self.listaMonticulo[i]
                 self.listaMonticulo[i] = tmp
+            else:
+                break
             i = i // 2  
              
     def insertar(self,k):
@@ -37,10 +48,10 @@ class monticuloBinario:
     def eliminarMin(self):
         if self.tamanoActual == 0:
             return None
-        valorSacado = self.listaMonticulo[1]
+        valorSacado = self.listaMonticulo[1][1]
         self.listaMonticulo[1] = self.listaMonticulo[self.tamanoActual]
-        self.listaMonticulo.pop()  # Elimina el último elemento
-        self.tamanoActual -= 1
+        self.tamanoActual -= 1  
+        self.listaMonticulo.pop() # Elimina el último elemento
         self.infiltAbajo(1)
         return valorSacado
     
