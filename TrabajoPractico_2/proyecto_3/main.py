@@ -4,7 +4,7 @@ from modules.Prim import prim as p
 def main():
     # Lee las aldeas del archivo
     lista_aldeas = set()
-    with open("TrabajoPractico_2/proyecto_3/data/aldeas.txt", "r", encoding="UTF-8") as aldeas:
+    with open("data//aldeas.txt", "r", encoding="UTF-8") as aldeas:
         for linea in aldeas:
             partes = linea.strip().split(", ")
             aldea1 = partes[0]
@@ -12,7 +12,7 @@ def main():
     
     # Crea el grafo
     grafo = Grafo()
-    with open("TrabajoPractico_2/proyecto_3/data/aldeas.txt", "r", encoding="UTF-8") as archivo:
+    with open("data//aldeas.txt", "r", encoding="UTF-8") as archivo:
         for linea in archivo:
             partes = linea.strip().split(", ")
             if len(partes) == 3:
@@ -32,7 +32,7 @@ def main():
         print("La aldea de inicio 'Peligros' no se encuentra en el grafo.")
         return
     
-    # Ejecuta Prim para encontrar el árbol de expansión mínima
+    # Ejecuta Prim modificado para encontrar el árbol de expansión mínima
     flujo_mensajes, aldeas_recorridas = p(grafo, aldea_inicio)
     
     # Calcular distancia total
@@ -43,12 +43,12 @@ def main():
     for i, mensaje in enumerate(flujo_mensajes, 1):
         print(f"{i}. {mensaje['emisor']} a {mensaje['receptor']} (distancia: {mensaje['distancia']})")
     
-    # Mostrar aldeas en orden alfabético
+    # Imprime aldeas en orden alfabético
     print("\nAldeas recorridas (orden alfabético):")
     for aldea in sorted(aldeas_recorridas):
         print(aldea)
     
-    # Mostrar distancia total
+    # Imprime la distancia total recorrida
     print(f"\nDistancia total recorrida: {distancia_total}")
 
 if __name__ == "__main__":

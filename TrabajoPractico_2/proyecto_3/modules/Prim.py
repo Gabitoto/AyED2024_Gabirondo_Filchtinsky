@@ -2,20 +2,18 @@ from modules.min_heap import monticuloBinario
 import sys
 
 def prim(G, inicio):
-    cp = monticuloBinario()
+    cp = monticuloBinario()  # Se crea una cola de prioridad
     arbol_expansion = set()  # Para mantener registro de las aristas del árbol
     flujo_mensajes = []  # Lista para almacenar el flujo de mensajes
     visitados = set()  # Conjunto para evitar duplicados
     aldeas_recorridas = set()  # Conjunto para almacenar aldeas recorridas
 
-    # Inicializar todos los vértices
+    # Inicializar todos los vértices en inf y None asignandoles distancia 0 al vertice de inicio
     for v in G:
         v.asignar_distancia(sys.maxsize)
         v.asignar_predecesor(None)
     inicio.asignar_distancia(0)
-    
-    # Construir el montículo con todos los vértices
-    cp.construir_monticulo([(v.obtener_distancia(), v) for v in G])
+    cp.construir_monticulo([(v.obtener_distancia(), v) for v in G]) # Construimos el monticulo
 
     while not cp.esta_vacia():
         verticeActual = cp.eliminarMin()

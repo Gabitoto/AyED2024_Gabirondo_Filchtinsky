@@ -24,13 +24,12 @@ class Grafo:
         return n in self.lista_vertices
 
     def agregar_arista(self, de, a, ponderacion):
-        # Agregar vértices si no existen
         if de not in self.lista_vertices:
             self.agregar_vertice(de)
         if a not in self.lista_vertices:
             self.agregar_vertice(a)
         
-        # Agregar arista en ambas direcciones (grafo no dirigido)
+        # Se agregar arista en ambas direcciones (grafo no dirigido)
         self.lista_vertices[de].agregar_vecino(self.lista_vertices[a], ponderacion)
         self.lista_vertices[a].agregar_vecino(self.lista_vertices[de], ponderacion)
 
