@@ -154,7 +154,7 @@ class ArbolBinarioBusqueda:
 
             if nodo.padre.factorEquilibrio != 0:
                 self.actualizarEquilibrio(nodo.padre)
-    
+
     def rotarIzquierda(self,rotRaiz):
         nuevaRaiz = rotRaiz.hijoDerecho
         rotRaiz.hijoDerecho = nuevaRaiz.hijoIzquierdo
@@ -175,7 +175,7 @@ class ArbolBinarioBusqueda:
     
     def rotarDerecha(self,rotRaiz):
         nuevaRaiz = rotRaiz.hijoIzquierdo
-        rotRaiz.hijoIzquierdo = nuevaRaiz.hijoIzquierdo
+        rotRaiz.hijoIzquierdo = nuevaRaiz.hijoDerecho
         if nuevaRaiz.hijoDerecho!= None:
             nuevaRaiz.hijoDerecho.padre = rotRaiz
         nuevaRaiz.padre = rotRaiz.padre
@@ -188,8 +188,8 @@ class ArbolBinarioBusqueda:
                 rotRaiz.padre.hijoIzquierdo = nuevaRaiz
         nuevaRaiz.hijoDerecho = rotRaiz
         rotRaiz.padre = nuevaRaiz
-        rotRaiz.factorEquilibrio = rotRaiz.factorEquilibrio + 1 - min(nuevaRaiz.factorEquilibrio, 0)
-        nuevaRaiz.factorEquilibrio = nuevaRaiz.factorEquilibrio + 1 + max(rotRaiz.factorEquilibrio, 0)
+        rotRaiz.factorEquilibrio = rotRaiz.factorEquilibrio - 1 - min(nuevaRaiz.factorEquilibrio, 0)
+        nuevaRaiz.factorEquilibrio = nuevaRaiz.factorEquilibrio - 1 + max(rotRaiz.factorEquilibrio, 0)
     
     
         
