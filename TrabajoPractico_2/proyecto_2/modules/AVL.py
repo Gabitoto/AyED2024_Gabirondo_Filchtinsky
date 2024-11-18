@@ -105,6 +105,26 @@ class NodoArbol:
                     for elem in self.hijoDerecho:
                         yield elem
     
+    def empalmar(self):
+       if self.esHoja():
+           if self.esHijoIzquierdo():
+                  self.padre.hijoIzquierdo = None
+           else:
+                  self.padre.hijoDerecho = None
+       elif self.tieneAlgunHijo():
+           if self.tieneHijoIzquierdo():
+                  if self.esHijoIzquierdo():
+                     self.padre.hijoIzquierdo = self.hijoIzquierdo
+                  else:
+                     self.padre.hijoDerecho = self.hijoIzquierdo
+                  self.hijoIzquierdo.padre = self.padre
+           else:
+                  if self.esHijoIzquierdo():
+                     self.padre.hijoIzquierdo = self.hijoDerecho
+                  else:
+                     self.padre.hijoDerecho = self.hijoDerecho
+                  self.hijoDerecho.padre = self.padre
+    
     def imprimir_nodo(self):
         print(f"Fecha: {self.clave}, Temperatura: {self.valor}")
 
@@ -259,26 +279,6 @@ class ArbolBinarioBusqueda:
 
     def __delitem__(self,clave):
        self.eliminar(clave)
-
-    def empalmar(self):
-       if self.esHoja():
-           if self.esHijoIzquierdo():
-                  self.padre.hijoIzquierdo = None
-           else:
-                  self.padre.hijoDerecho = None
-       elif self.tieneAlgunHijo():
-           if self.tieneHijoIzquierdo():
-                  if self.esHijoIzquierdo():
-                     self.padre.hijoIzquierdo = self.hijoIzquierdo
-                  else:
-                     self.padre.hijoDerecho = self.hijoIzquierdo
-                  self.hijoIzquierdo.padre = self.padre
-           else:
-                  if self.esHijoIzquierdo():
-                     self.padre.hijoIzquierdo = self.hijoDerecho
-                  else:
-                     self.padre.hijoDerecho = self.hijoDerecho
-                  self.hijoDerecho.padre = self.padre
       
     def encontrarSucesor(self, nodo):
         if nodo.tieneHijoDerecho():
@@ -303,7 +303,7 @@ class ArbolBinarioBusqueda:
            else:
                nodoActual.padre.hijoDerecho = None
          elif nodoActual.tieneAmbosHijos(): #interior
-           suc = nodoActual.encontrarSucesor()
+           suc = self.encontrarSucesor(nodoActual)
            suc.empalmar()
            nodoActual.clave = suc.clave
            nodoActual.valor = suc.valor
