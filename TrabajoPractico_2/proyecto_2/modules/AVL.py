@@ -279,28 +279,24 @@ class ArbolBinarioBusqueda:
                   else:
                      self.padre.hijoDerecho = self.hijoDerecho
                   self.hijoDerecho.padre = self.padre
+      
+    def encontrarSucesor(self, nodo):
+        if nodo.tieneHijoDerecho():
+            return self.encontrarMin(nodo.hijoDerecho)
+        else:
+            actual = nodo
+            while actual.padre and actual.esHijoDerecho():
+                actual = actual.padre
+            return actual.padre  
 
-    def encontrarSucesor(self):
-      suc = None
-      if self.tieneHijoDerecho():
-          suc = self.hijoDerecho.encontrarMin()
-      else:
-          if self.padre:
-                 if self.esHijoIzquierdo():
-                     suc = self.padre
-                 else:
-                     self.padre.hijoDerecho = None
-                     suc = self.padre.encontrarSucesor()
-                     self.padre.hijoDerecho = self
-      return suc
-
-    def encontrarMin(self):
-      actual = self
-      while actual.tieneHijoIzquierdo():
-          actual = actual.hijoIzquierdo
-      return actual
+    def encontrarMin(self, nodo):
+        actual = nodo
+        while actual.tieneHijoIzquierdo():
+            actual = actual.hijoIzquierdo
+        return actual
 
     def remover(self,nodoActual):
+         padre = nodoActual.padre
          if nodoActual.esHoja(): #hoja
            if nodoActual == nodoActual.padre.hijoIzquierdo:
                nodoActual.padre.hijoIzquierdo = None
@@ -310,7 +306,7 @@ class ArbolBinarioBusqueda:
            suc = nodoActual.encontrarSucesor()
            suc.empalmar()
            nodoActual.clave = suc.clave
-           nodoActual.cargaUtil = suc.cargaUtil
+           nodoActual.valor = suc.valor
 
          else: # este nodo tiene un (1) hijo
            if nodoActual.tieneHijoIzquierdo():
@@ -322,7 +318,7 @@ class ArbolBinarioBusqueda:
                  nodoActual.padre.hijoDerecho = nodoActual.hijoIzquierdo
              else:
                  nodoActual.reemplazarDatoDeNodo(nodoActual.hijoIzquierdo.clave,
-                                    nodoActual.hijoIzquierdo.cargaUtil,
+                                    nodoActual.hijoIzquierdo.valor,
                                     nodoActual.hijoIzquierdo.hijoIzquierdo,
                                     nodoActual.hijoIzquierdo.hijoDerecho)
            else:
@@ -334,9 +330,53 @@ class ArbolBinarioBusqueda:
                  nodoActual.padre.hijoDerecho = nodoActual.hijoDerecho
              else:
                  nodoActual.reemplazarDatoDeNodo(nodoActual.hijoDerecho.clave,
-                                    nodoActual.hijoDerecho.cargaUtil,
+                                    nodoActual.hijoDerecho.valor,
                                     nodoActual.hijoDerecho.hijoIzquierdo,
                                     nodoActual.hijoDerecho.hijoDerecho)
+         if padre:
+            self.rebalancear_eliminacion(padre)
+    
+    def rebalancear_eliminacion(self, nodo):
+        while nodo:
+            if nodo.factorEquilibrio > 1:
+                # Rotación a la derecha
+                if nodo.hijoDerecho.factorEquilibrio >= 0:
+                    self.rotarIzquierda(nodo)
+                else:
+                    # Rotación doble
+                    self.rotarDerecha(nodo.hijoDerecho)
+                    self.rotarIzquierda(nodo)
+            elif nodo.factorEquilibrio < -1:
+                # Rotación a la izquierda
+                if nodo.hijoIzquierdo.factorEquilibrio <= 0:
+                    self.rotarDerecha(nodo)
+                else:
+                    # Rotación doble
+                    self.rotarIzquierda(nodo.hijoIzquierdo)
+                    self.rotarDerecha(nodo)
+            
+            # Actualizar factor de equilibrio
+            if nodo.factorEquilibrio == 0:
+                # Si el factor de equilibrio llega a 0, paramos
+                break
+            
+            # Subir al padre
+            nodo = nodo.padre
+            
+    def removerNodoSucesor(self, nodo):
+        # Si el nodo sucesor es una hoja
+        if nodo.esHoja():
+            if nodo.esHijoIzquierdo():
+                nodo.padre.hijoIzquierdo = None
+            else:
+                nodo.padre.hijoDerecho = None
+        # Si el nodo sucesor tiene solo hijo derecho
+        elif nodo.tieneHijoDerecho():
+            if nodo.esHijoIzquierdo():
+                nodo.padre.hijoIzquierdo = nodo.hijoDerecho
+            else:
+                nodo.padre.hijoDerecho = nodo.hijoDerecho
+            nodo.hijoDerecho.padre = nodo.padre
 
     def in_order_generator(self, nodo):
         """Generador que recorre el árbol AVL en in-order."""
