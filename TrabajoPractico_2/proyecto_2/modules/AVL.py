@@ -142,29 +142,7 @@ class ArbolBinarioBusqueda:
             else:
                 nodoActual.hijoDerecho = NodoArbol(clave,valor,padre=nodoActual)
                 self.actualizarEquilibrio(nodoActual.hijoDerecho)
-
-    """def actualizarEquilibrio(self,nodo):
-        if nodo.factorEquilibrio > 1 or nodo.factorEquilibrio < -1:
-            self.reequilibrar(nodo)
-            return
-        if nodo.padre != None:
-            if nodo.esHijoIzquierdo():
-                nodo.padre.sumar_factor(1)
-            elif nodo.esHijoDerecho():
-                nodo.padre.restar_factor(1)
-
-            if nodo.padre.factorEquilibrio != 0:
-                self.actualizarEquilibrio(nodo.padre)""" # Si anda
-    
-    """def actualizarEquilibrio(self, nodo):
-        if nodo is None:
-            return
-
-        if abs(nodo.factorEquilibrio) > 1:
-            self.reequilibrar(nodo)
-        elif nodo.factorEquilibrio != 0 and nodo.padre is not None:
-            self.actualizarEquilibrio(nodo.padre)""" #NO anda
-            
+        
     def actualizarEquilibrio(self, nodo):
         if nodo.padre is not None:
             if nodo.esHijoIzquierdo():
