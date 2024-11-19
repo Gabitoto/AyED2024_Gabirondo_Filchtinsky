@@ -58,6 +58,7 @@ class Temperaturas_DB:
     def borrar_temperatura(self,fecha): 
         """recibe una fecha y elimina del árbol la medición correspondiente a esa fecha."""
         self.base_de_datos.eliminar(fecha)
+        self.tamano -= 1
     
     def devolver_temperaturas(self, fecha1, fecha2): 
         """devuelve un listado de las mediciones de temperatura en el rango recibido por parámetro con el formato “dd/mm/aaaa: temperatura

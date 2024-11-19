@@ -105,25 +105,6 @@ class NodoArbol:
                     for elem in self.hijoDerecho:
                         yield elem
     
-    def empalmar(self):
-       if self.esHoja():
-           if self.esHijoIzquierdo():
-                  self.padre.hijoIzquierdo = None
-           else:
-                  self.padre.hijoDerecho = None
-       elif self.tieneAlgunHijo():
-           if self.tieneHijoIzquierdo():
-                  if self.esHijoIzquierdo():
-                     self.padre.hijoIzquierdo = self.hijoIzquierdo
-                  else:
-                     self.padre.hijoDerecho = self.hijoIzquierdo
-                  self.hijoIzquierdo.padre = self.padre
-           else:
-                  if self.esHijoIzquierdo():
-                     self.padre.hijoIzquierdo = self.hijoDerecho
-                  else:
-                     self.padre.hijoDerecho = self.hijoDerecho
-                  self.hijoDerecho.padre = self.padre
     
     def imprimir_nodo(self):
         print(f"Fecha: {self.clave}, Temperatura: {self.valor}")
@@ -174,7 +155,7 @@ class ArbolBinarioBusqueda:
 
             if nodo.padre.factorEquilibrio != 0:
                 self.actualizarEquilibrio(nodo.padre)
-
+      
     def rotarIzquierda(self,rotRaiz):
         nuevaRaiz = rotRaiz.hijoDerecho
         rotRaiz.hijoDerecho = nuevaRaiz.hijoIzquierdo
@@ -215,8 +196,6 @@ class ArbolBinarioBusqueda:
         nuevaRaiz.restar_factor(1)
         nuevaRaiz.sumar_factor(min(rotRaiz.factorEquilibrio, 0))
     
-    
-        
     def reequilibrar(self,nodo):
         if nodo.factorEquilibrio < 0:
            if nodo.hijoDerecho.factorEquilibrio > 0:
@@ -262,122 +241,94 @@ class ArbolBinarioBusqueda:
            return True
        else:
            return False
-
-    def eliminar(self,clave):
-      if self.tamano > 1:
-         nodoAEliminar = self._obtener(clave,self.raiz)
-         if nodoAEliminar:
-             self.remover(nodoAEliminar)
-             self.tamano = self.tamano-1
-         else:
-             raise KeyError('Error, la clave no está en el árbol')
-      elif self.tamano == 1 and self.raiz.clave == clave:
-         self.raiz = None
-         self.tamano = self.tamano - 1
-      else:
-         raise KeyError('Error, la clave no está en el árbol')
+         
+    def eliminar(self, clave):
+        nodo = self._obtener(clave, self.raiz)
+        if nodo is None:
+            raise KeyError(f"La clave {clave} no existe en el árbol")
+        
+        # Guardar el padre antes de eliminar para actualizar el equilibrio después
+        padre_original = nodo.padre
+        
+        # Caso 1: Nodo hoja
+        if nodo.esHoja():
+            if nodo == self.raiz:
+                self.raiz = None
+            else:
+                padre = nodo.padre
+                if nodo.esHijoIzquierdo():
+                    padre.hijoIzquierdo = None
+                    padre.restar_factor(1)
+                else:
+                    padre.hijoDerecho = None
+                    padre.sumar_factor(1)
+                
+                # Actualizar el equilibrio desde el padre
+                if padre.factorEquilibrio != 0:
+                    self.actualizarEquilibrio(padre)
+        
+        # Caso 2: Nodo con un hijo
+        elif nodo.hijoIzquierdo is None:  # tiene hijo derecho
+            if nodo == self.raiz:
+                self.raiz = nodo.hijoDerecho
+                self.raiz.padre = None
+            else:
+                padre = nodo.padre
+                hijo = nodo.hijoDerecho
+                if nodo.esHijoIzquierdo():
+                    padre.hijoIzquierdo = hijo
+                else:
+                    padre.hijoDerecho = hijo
+                hijo.padre = padre
+                
+                # Actualizar el equilibrio
+                padre.restar_factor(1)
+                if padre.factorEquilibrio != 0:
+                    self.actualizarEquilibrio(padre)
+        
+        elif nodo.hijoDerecho is None:  # tiene hijo izquierdo
+            if nodo == self.raiz:
+                self.raiz = nodo.hijoIzquierdo
+                self.raiz.padre = None
+            else:
+                padre = nodo.padre
+                hijo = nodo.hijoIzquierdo
+                if nodo.esHijoIzquierdo():
+                    padre.hijoIzquierdo = hijo
+                else:
+                    padre.hijoDerecho = hijo
+                hijo.padre = padre
+                
+                # Actualizar el equilibrio
+                padre.sumar_factor(1)
+                if padre.factorEquilibrio != 0:
+                    self.actualizarEquilibrio(padre)
+        
+        # Caso 3: Nodo con dos hijos
+        else:
+            # Encontrar el sucesor (el menor del subárbol derecho)
+            sucesor = self.encontrarMin(nodo.hijoDerecho)
+            # Guardar los valores del sucesor
+            temp_clave = sucesor.clave
+            temp_valor = sucesor.valor
+            # Eliminar el sucesor recursivamente
+            self.eliminar(sucesor.clave)
+            # Copiar los valores del sucesor al nodo actual
+            nodo.clave = temp_clave
+            nodo.valor = temp_valor
+        
+        # Decrementar el tamaño del árbol
+        self.tamano -= 1
 
     def __delitem__(self,clave):
        self.eliminar(clave)
       
-    def encontrarSucesor(self, nodo):
-        if nodo.tieneHijoDerecho():
-            return self.encontrarMin(nodo.hijoDerecho)
-        else:
-            actual = nodo
-            while actual.padre and actual.esHijoDerecho():
-                actual = actual.padre
-            return actual.padre  
-
     def encontrarMin(self, nodo):
         actual = nodo
         while actual.tieneHijoIzquierdo():
             actual = actual.hijoIzquierdo
         return actual
-
-    def remover(self,nodoActual):
-         padre = nodoActual.padre
-         if nodoActual.esHoja(): #hoja
-           if nodoActual == nodoActual.padre.hijoIzquierdo:
-               nodoActual.padre.hijoIzquierdo = None
-           else:
-               nodoActual.padre.hijoDerecho = None
-         elif nodoActual.tieneAmbosHijos(): #interior
-           suc = self.encontrarSucesor(nodoActual)
-           suc.empalmar()
-           nodoActual.clave = suc.clave
-           nodoActual.valor = suc.valor
-
-         else: # este nodo tiene un (1) hijo
-           if nodoActual.tieneHijoIzquierdo():
-             if nodoActual.esHijoIzquierdo():
-                 nodoActual.hijoIzquierdo.padre = nodoActual.padre
-                 nodoActual.padre.hijoIzquierdo = nodoActual.hijoIzquierdo
-             elif nodoActual.esHijoDerecho():
-                 nodoActual.hijoIzquierdo.padre = nodoActual.padre
-                 nodoActual.padre.hijoDerecho = nodoActual.hijoIzquierdo
-             else:
-                 nodoActual.reemplazarDatoDeNodo(nodoActual.hijoIzquierdo.clave,
-                                    nodoActual.hijoIzquierdo.valor,
-                                    nodoActual.hijoIzquierdo.hijoIzquierdo,
-                                    nodoActual.hijoIzquierdo.hijoDerecho)
-           else:
-             if nodoActual.esHijoIzquierdo():
-                 nodoActual.hijoDerecho.padre = nodoActual.padre
-                 nodoActual.padre.hijoIzquierdo = nodoActual.hijoDerecho
-             elif nodoActual.esHijoDerecho():
-                 nodoActual.hijoDerecho.padre = nodoActual.padre
-                 nodoActual.padre.hijoDerecho = nodoActual.hijoDerecho
-             else:
-                 nodoActual.reemplazarDatoDeNodo(nodoActual.hijoDerecho.clave,
-                                    nodoActual.hijoDerecho.valor,
-                                    nodoActual.hijoDerecho.hijoIzquierdo,
-                                    nodoActual.hijoDerecho.hijoDerecho)
-         if padre:
-            self.rebalancear_eliminacion(padre)
     
-    def rebalancear_eliminacion(self, nodo):
-        while nodo:
-            if nodo.factorEquilibrio > 1:
-                # Rotación a la derecha
-                if nodo.hijoDerecho.factorEquilibrio >= 0:
-                    self.rotarIzquierda(nodo)
-                else:
-                    # Rotación doble
-                    self.rotarDerecha(nodo.hijoDerecho)
-                    self.rotarIzquierda(nodo)
-            elif nodo.factorEquilibrio < -1:
-                # Rotación a la izquierda
-                if nodo.hijoIzquierdo.factorEquilibrio <= 0:
-                    self.rotarDerecha(nodo)
-                else:
-                    # Rotación doble
-                    self.rotarIzquierda(nodo.hijoIzquierdo)
-                    self.rotarDerecha(nodo)
-            
-            # Actualizar factor de equilibrio
-            if nodo.factorEquilibrio == 0:
-                # Si el factor de equilibrio llega a 0, paramos
-                break
-            
-            # Subir al padre
-            nodo = nodo.padre
-            
-    def removerNodoSucesor(self, nodo):
-        # Si el nodo sucesor es una hoja
-        if nodo.esHoja():
-            if nodo.esHijoIzquierdo():
-                nodo.padre.hijoIzquierdo = None
-            else:
-                nodo.padre.hijoDerecho = None
-        # Si el nodo sucesor tiene solo hijo derecho
-        elif nodo.tieneHijoDerecho():
-            if nodo.esHijoIzquierdo():
-                nodo.padre.hijoIzquierdo = nodo.hijoDerecho
-            else:
-                nodo.padre.hijoDerecho = nodo.hijoDerecho
-            nodo.hijoDerecho.padre = nodo.padre
-
     def in_order_generator(self, nodo):
         """Generador que recorre el árbol AVL en in-order."""
         if nodo is not None:

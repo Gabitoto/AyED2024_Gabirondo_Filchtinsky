@@ -1,12 +1,12 @@
 # Aplicación secundaria para probar el funcionamiento de las rotaciones en un Arbol AVL
 
-from modules.Temperaturas_DB import Temperaturas_DB
+from modules.Temperaturas_DB  import Temperaturas_DB
 
 
 def imprimir_arbol(nodo, nivel=0, prefijo="Raíz: "):
     """Función para imprimir el árbol de forma visual"""
     if nodo is not None:
-        print("  " * nivel + prefijo + f"{nodo.clave} (T: {nodo.valor}°C, FE: {nodo.factorEquilibrio})")
+        print("  " * nivel + prefijo + f"{nodo.clave} (T: {nodo.valor}°C)")
         if nodo.tieneHijoIzquierdo():
             imprimir_arbol(nodo.hijoIzquierdo, nivel + 1, "L── ")
         if nodo.tieneHijoDerecho():
@@ -47,6 +47,7 @@ def test_avl():
             temp = db.devolver_temperatura(fecha)
             if temp is not None:
                 print(f"Temperatura encontrada: {temp}°C")
+            
             else:
                 print("Fecha no encontrada en el árbol")
                 
